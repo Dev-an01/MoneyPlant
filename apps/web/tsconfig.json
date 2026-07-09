@@ -1,0 +1,24 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "allowJs": true,
+    "noEmit": true,
+    // Next apps never emit .d.ts; base sets declaration:true for the publishable
+    // packages, which makes tsc try to "name" next-auth's non-portable internal
+    // types (TS2742). Apps opt out.
+    "declaration": false,
+    "incremental": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "plugins": [{ "name": "next" }],
+    "paths": {
+      "@/*": ["./*"],
+      "@moneyplant/shared": ["../../packages/shared/src/index.ts"],
+      "@moneyplant/core": ["../../packages/core/src/index.ts"],
+      "@moneyplant/db": ["../../packages/db/src/index.ts"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

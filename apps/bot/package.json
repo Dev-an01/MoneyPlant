@@ -1,0 +1,23 @@
+{
+  "name": "@moneyplant/bot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run src/index.ts",
+    "start": "bun run src/index.ts",
+    "lint": "echo \"(bot) no lint yet\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@moneyplant/core": "workspace:*",
+    "@moneyplant/db": "workspace:*",
+    "@moneyplant/shared": "workspace:*",
+    "drizzle-orm": "^0.33.0",
+    "grammy": "^1.30.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "typescript": "^5.4.5"
+  }
+}

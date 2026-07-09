@@ -1,0 +1,28 @@
+{
+  "name": "moneyplant",
+  "private": true,
+  "version": "0.1.0",
+  "description": "MoneyPlant — personal finance + investment tracker, logged by Telegram, reviewed on the web.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "bun --filter '*' dev",
+    "build": "bun --filter '*' build",
+    "lint": "bun --filter '*' lint",
+    "typecheck": "bun --filter '*' typecheck",
+    "db": "node packages/db/scripts/pg.mjs start",
+    "db:stop": "node packages/db/scripts/pg.mjs stop",
+    "web": "bun --filter '@moneyplant/web' dev",
+    "bot": "bun --filter '@moneyplant/bot' dev"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "typescript": "^5.4.5"
+  },
+  "packageManager": "bun@1.1.0",
+  "engines": {
+    "bun": ">=1.1.0"
+  }
+}

@@ -1,0 +1,64 @@
+# MoneyPlant — full local stack in containers.
+#
+#   1. cp .env.docker.example .env      # fill AUTH_SECRET (and BOT_TOKEN for the bot)
+#   2. docker compose up --build        # web + Postgres  →  http://localhost:3000
+#   3. docker compose --profile bot up --build   # also start the Telegram bot
+#
+# Values come from a repo-root ".env" file (see .env.docker.example). The schema
+# is created automatically on first request — no manual migration step.
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: moneyplant
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-moneyplant}
+      POSTGRES_DB: moneyplant
+    volumes:
+      - moneyplant_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U moneyplant -d moneyplant"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_BOT_USERNAME: ${NEXT_PUBLIC_BOT_USERNAME:-}
+    command: ["bun", "run", "--filter", "@moneyplant/web", "start"]
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://moneyplant:${POSTGRES_PASSWORD:-moneyplant}@db:5432/moneyplant
+      AUTH_SECRET: ${AUTH_SECRET:?set AUTH_SECRET in .env (npx auth secret)}
+      AUTH_TRUST_HOST: "true"
+      NEXT_PUBLIC_BOT_USERNAME: ${NEXT_PUBLIC_BOT_USERNAME:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      MONEYPLANT_AI_MODEL: ${MONEYPLANT_AI_MODEL:-}
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Optional — only starts with:  docker compose --profile bot up
+  bot:
+    build: .
+    command: ["bun", "run", "--filter", "@moneyplant/bot", "start"]
+    restart: unless-stopped
+    profiles: ["bot"]
+    environment:
+      DATABASE_URL: postgres://moneyplant:${POSTGRES_PASSWORD:-moneyplant}@db:5432/moneyplant
+      # Empty by default so `docker compose up` (web only) doesn't fail parsing; the
+      # bot's own startup guard prints a clear message if it's missing.
+      BOT_TOKEN: ${BOT_TOKEN:-}
+      NEXT_PUBLIC_BOT_USERNAME: ${NEXT_PUBLIC_BOT_USERNAME:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  moneyplant_pgdata:

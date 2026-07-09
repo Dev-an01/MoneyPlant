@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Libre+Franklin:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;}
+    html,body{margin:0;padding:0;}
+    body{font-family:'Libre Franklin',system-ui,sans-serif;background:#EFE9DD;color:#1C1A16;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+    ::selection{background:#2E5D45;color:#F6F2EA;}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+    input,select,textarea{font-family:inherit;color:inherit;}
+    a{color:inherit;}
+    ::-webkit-scrollbar{width:10px;height:10px;}
+    ::-webkit-scrollbar-thumb{background:#D8CFBE;border-radius:10px;border:3px solid #EFE9DD;}
+    *:focus-visible{outline:2px solid #2E5D45;outline-offset:2px;border-radius:3px;}
+    @keyframes mp-spin{to{transform:rotate(360deg);}}
+    @keyframes mp-pulse{0%,100%{opacity:.45;}50%{opacity:1;}}
+    @keyframes mp-shimmer{0%{background-position:-360px 0;}100%{background-position:360px 0;}}
+    @keyframes mp-rise{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes mp-toast{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+    .mp-skel{background:linear-gradient(90deg,#E5DDCF 25%,#EFE9DD 50%,#E5DDCF 75%);background-size:720px 100%;animation:mp-shimmer 1.4s infinite linear;border-radius:5px;}
+  </style>
+</helmet>
+
+<div style="min-height:100vh;background:#EFE9DD;display:flex;{{ rootDir }}">
+
+  <!-- ============ SIDEBAR (desktop) ============ -->
+  <sc-if value="{{ showSidebar }}" hint-placeholder-val="{{ true }}">
+  <aside style="width:248px;flex:0 0 248px;position:sticky;top:0;height:100vh;background:#F6F2EA;border-right:1px solid #E2D9C8;display:flex;flex-direction:column;padding:26px 18px 18px;">
+    <div style="display:flex;align-items:center;gap:10px;padding:0 8px 4px;">
+      <div style="width:30px;height:30px;border-radius:8px;background:#2E5D45;display:flex;align-items:center;justify-content:center;flex:0 0 30px;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#F6F2EA" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4 0-8-2.5-8-8 5 0 8 3 8 8Z"/><path d="M12 21c0-6 3-10 8-11 0 6.5-4 11-8 11Z"/><path d="M12 21v-7"/></svg>
+      </div>
+      <div style="font-family:'Fraunces',serif;font-weight:600;font-size:19px;letter-spacing:-.01em;">MoneyPlant</div>
+    </div>
+
+    <nav style="margin-top:26px;display:flex;flex-direction:column;gap:2px;flex:1;">
+      <button onClick="{{ nv.overview.onClick }}" style="{{ nv.overview.style }}" style-hover="background:#EBE3D4;">
+        <span style="display:flex;align-items:center;width:19px;height:19px;flex:0 0 19px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="9" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="12" width="8" height="9" rx="1.5"/><rect x="3" y="16" width="8" height="5" rx="1.5"/></svg></span>
+        <span style="flex:1;text-align:left;">Overview</span>
+      </button>
+      <button onClick="{{ nv.transactions.onClick }}" style="{{ nv.transactions.style }}" style-hover="background:#EBE3D4;">
+        <span style="display:flex;align-items:center;width:19px;height:19px;flex:0 0 19px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16l-2.5-1.5L15 20l-2.5-1.5L10 20l-2.5-1.5L5 20l-1-1Z"/><path d="M8 9h8M8 13h5"/></svg></span>
+        <span style="flex:1;text-align:left;">Transactions</span>
+      </button>
+      <button onClick="{{ nv.spending.onClick }}" style="{{ nv.spending.style }}" style-hover="background:#EBE3D4;">
+        <span style="display:flex;align-items:center;width:19px;height:19px;flex:0 0 19px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9v9Z"/><path d="M21 12a9 9 0 0 0-9-9"/></svg></span>
+        <span style="flex:1;text-align:left;">Spending</span>
+      </button>
+      <button onClick="{{ nv.insights.onClick }}" style="{{ nv.insights.style }}" style-hover="background:#EBE3D4;">
+        <span style="display:flex;align-items:center;width:19px;height:19px;flex:0 0 19px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 16v-4"/><path d="M13 16V8"/><path d="M18 16v-6"/></svg></span>
+        <span style="flex:1;text-align:left;">Monthly Insights</span>
+      </button>
+      <button onClick="{{ nv.portfolio.onClick }}" style="{{ nv.portfolio.style }}" style-hover="background:#EBE3D4;">
+        <span style="display:flex;align-items:center;width:19px;height:19px;flex:0 0 19px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-5 4 4 7-8"/><path d="M20 7h-4M20 7v4"/></svg></span>
+        <span style="flex:1;text-align:left;">Portfolio</span>
+      </button>
+      <button onClick="{{ nv.pending.onClick }}" style="{{ nv.pending.style }}" style-hover="background:#EBE3D4;">
+        <span style="display:flex;align-items:center;width:19px;height:19px;flex:0 0 19px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+        <span style="flex:1;text-align:left;">Pending</span>
+        <sc-if value="{{ pendingBadge }}" hint-placeholder-val="{{ true }}"><span style="background:#B06A2C;color:#F6F2EA;font-size:11px;font-weight:700;min-width:19px;height:19px;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:0 5px;font-family:'IBM Plex Mono',monospace;">{{ pendBadgeText }}</span></sc-if>
+      </button>
+      <button onClick="{{ nv.privacy.onClick }}" style="{{ nv.privacy.style }}" style-hover="background:#EBE3D4;">
+        <span style="display:flex;align-items:center;width:19px;height:19px;flex:0 0 19px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+        <span style="flex:1;text-align:left;">Privacy &amp; Trust</span>
+      </button>
+      <button onClick="{{ nv.settings.onClick }}" style="{{ nv.settings.style }}" style-hover="background:#EBE3D4;">
+        <span style="display:flex;align-items:center;width:19px;height:19px;flex:0 0 19px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 13.5a7.8 7.8 0 0 0 0-3l1.8-1.4-2-3.4-2.1.9a7.6 7.6 0 0 0-2.6-1.5L14 2h-4l-.5 2.6a7.6 7.6 0 0 0-2.6 1.5l-2.1-.9-2 3.4L4.6 10.5a7.8 7.8 0 0 0 0 3l-1.8 1.4 2 3.4 2.1-.9a7.6 7.6 0 0 0 2.6 1.5L10 22h4l.5-2.6a7.6 7.6 0 0 0 2.6-1.5l2.1.9 2-3.4Z"/></svg></span>
+        <span style="flex:1;text-align:left;">Settings</span>
+      </button>
+      <div style="display:flex;align-items:center;gap:12px;padding:9px 12px;font-size:14px;color:#A89E8B;font-weight:500;cursor:default;">
+        <span style="display:flex;align-items:center;width:19px;height:19px;flex:0 0 19px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+        <span style="flex:1;">Budgets</span>
+        <span style="font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#A89E8B;border:1px solid #DDD3C0;border-radius:5px;padding:2px 6px;">Soon</span>
+      </div>
+    </nav>
+
+    <div style="border-top:1px solid #E2D9C8;padding:14px 10px 4px;display:flex;align-items:flex-start;gap:10px;">
+      <span style="width:8px;height:8px;border-radius:50%;background:#2F7A4F;margin-top:5px;flex:0 0 8px;box-shadow:0 0 0 3px rgba(47,122,79,.16);"></span>
+      <div style="line-height:1.4;">
+        <div style="font-size:12.5px;font-weight:600;color:#3A362E;">Connected · Telegram</div>
+        <div style="font-size:12px;color:#9C9280;font-family:'IBM Plex Mono',monospace;">@moneyplant_bot</div>
+      </div>
+    </div>
+  </aside>
+  </sc-if>
+
+  <!-- ============ MAIN ============ -->
+  <main style="flex:1;min-width:0;display:flex;flex-direction:column;{{ mainPad }}">
+    <!-- top bar -->
+    <header style="position:sticky;top:0;z-index:30;background:rgba(239,233,221,.92);border-bottom:1px solid #E2D9C8;padding:{{ topbarPad }};display:flex;align-items:center;gap:16px;">
+      <div style="flex:1;min-width:0;display:flex;align-items:baseline;gap:12px;">
+        <h1 style="margin:0;font-family:'Fraunces',serif;font-weight:600;font-size:{{ titleSize }};letter-spacing:-.02em;color:#1C1A16;white-space:nowrap;">{{ pageTitle }}</h1>
+        <span style="font-size:13px;color:#9C9280;white-space:nowrap;">{{ pageSub }}</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;background:#F6F2EA;border:1px solid #E2D9C8;border-radius:9px;padding:8px 11px;width:{{ searchW }};max-width:300px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9C9280" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
+        <input value="{{ search }}" onInput="{{ onSearch }}" placeholder="Search transactions…" style="border:none;background:none;outline:none;font-size:14px;width:100%;color:#1C1A16;"/>
+      </div>
+      <button onClick="{{ goSettings }}" title="Account" style="width:36px;height:36px;border-radius:50%;background:#2E5D45;color:#F6F2EA;font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;flex:0 0 36px;font-family:'Fraunces',serif;" style-hover="background:#244A37;">AR</button>
+    </header>
+
+    <div style="flex:1;overflow-y:auto;">
+    <div style="max-width:{{ contentMax }};margin:0 auto;padding:{{ contentPad }};" key="{{ screen }}">
+
+      <!-- ============ OVERVIEW ============ -->
+      <sc-if value="{{ isOverview }}" hint-placeholder-val="{{ true }}">
+      <div style="">
+        <div style="display:grid;grid-template-columns:{{ ovTopCols }};gap:24px;align-items:stretch;">
+          <!-- cashflow -->
+          <section style="background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;padding:24px 26px;">
+            <div style="font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:#9C9280;font-weight:600;">June cash flow</div>
+            <div style="display:flex;flex-wrap:wrap;gap:30px;margin-top:18px;">
+              <div>
+                <div style="font-size:12.5px;color:#857C6B;margin-bottom:5px;">Money out · expenses</div>
+                <div style="font-family:'Fraunces',serif;font-size:34px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;">{{ monthExpense }}</div>
+              </div>
+              <div style="border-left:1px solid #E2D9C8;padding-left:30px;">
+                <div style="font-size:12.5px;color:#857C6B;margin-bottom:5px;">Into investments</div>
+                <div style="font-family:'Fraunces',serif;font-size:34px;font-weight:600;letter-spacing:-.02em;color:#2E5D45;font-variant-numeric:tabular-nums;">{{ monthInvest }}</div>
+              </div>
+            </div>
+            <div style="margin-top:20px;height:10px;border-radius:6px;overflow:hidden;display:flex;background:#E5DDCF;">
+              <div style="width:{{ flowExpenseW }};background:#B06A2C;"></div>
+              <div style="width:{{ flowInvestW }};background:#2E5D45;"></div>
+            </div>
+            <div style="margin-top:11px;font-size:13px;color:#6B6358;line-height:1.5;">
+              You directed <strong style="color:#2E5D45;">{{ investShare }}</strong> of this month's outflow into investments. <span style="color:#9C9280;">Net out {{ netOut }}.</span>
+            </div>
+          </section>
+          <!-- spend vs last month -->
+          <section style="background:#1C1A16;color:#EFE9DD;border-radius:14px;padding:24px 26px;display:flex;flex-direction:column;justify-content:center;">
+            <div style="font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:#9A9281;font-weight:600;">Spend vs May</div>
+            <div style="font-family:'Fraunces',serif;font-size:40px;font-weight:600;letter-spacing:-.02em;margin-top:10px;font-variant-numeric:tabular-nums;">{{ monthExpense }}</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:8px;">
+              <span style="display:inline-flex;align-items:center;gap:4px;font-weight:600;font-size:14px;color:{{ deltaColor }};font-family:'IBM Plex Mono',monospace;">{{ deltaArrow }} {{ expenseDeltaPct }}</span>
+              <span style="font-size:13px;color:#9A9281;">vs {{ lastMonthExpense }} last month</span>
+            </div>
+            <div style="margin-top:14px;font-size:12.5px;color:#B7AF9D;line-height:1.5;border-top:1px solid #34302A;padding-top:12px;">Driven by a one-off — <strong style="color:#D9A766;">MacBook ₹66,000</strong>. Recurring spend is flat.</div>
+          </section>
+        </div>
+
+        <!-- chart + where it went -->
+        <div style="display:grid;grid-template-columns:{{ ovMidCols }};gap:24px;margin-top:24px;align-items:start;">
+          <section style="background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;padding:22px 24px;">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;">
+              <div style="font-size:15px;font-weight:600;">Spend over June</div>
+              <div style="font-size:12px;color:#9C9280;">Daily · cap ₹4,000</div>
+            </div>
+            <div style="display:flex;align-items:flex-end;gap:{{ barGap }};height:140px;margin-top:22px;">
+              <sc-for list="{{ chartDays }}" as="d" hint-placeholder-count="15">
+                <div title="{{ d.tip }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:6px;position:relative;">
+                  <sc-if value="{{ d.outlier }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:-16px;font-size:10px;font-weight:600;color:#B06A2C;font-family:'IBM Plex Mono',monospace;white-space:nowrap;">{{ d.outLabel }}</span></sc-if>
+                  <div style="width:100%;max-width:18px;height:{{ d.h }};background:{{ d.color }};border-radius:4px 4px 0 0;transition:height .5s ease;"></div>
+                  <span style="font-size:10px;color:#A89E8B;font-family:'IBM Plex Mono',monospace;">{{ d.label }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </section>
+
+          <section style="background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;padding:22px 24px;">
+            <div style="font-size:15px;font-weight:600;margin-bottom:4px;">Where it went</div>
+            <div style="font-size:12px;color:#9C9280;margin-bottom:14px;">Tap a category to see entries</div>
+            <div style="display:flex;flex-direction:column;">
+              <sc-for list="{{ whereItWent }}" as="w" hint-placeholder-count="6">
+                <button onClick="{{ w.onClick }}" style="display:flex;flex-direction:column;gap:7px;padding:11px 0;border-bottom:1px solid #E9E1D2;text-align:left;width:100%;" style-hover="opacity:.72;">
+                  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;">
+                    <span style="font-size:13.5px;font-weight:500;color:#3A362E;">{{ w.category }}</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;font-variant-numeric:tabular-nums;">{{ w.amountLabel }}<span style="color:#A89E8B;font-size:11.5px;margin-left:7px;">{{ w.pctLabel }}</span></span>
+                  </div>
+                  <div style="height:5px;border-radius:4px;background:#E5DDCF;overflow:hidden;"><div style="width:{{ w.barW }};height:100%;background:{{ w.barColor }};border-radius:4px;"></div></div>
+                </button>
+              </sc-for>
+            </div>
+          </section>
+        </div>
+
+        <!-- portfolio strip + recent -->
+        <div style="display:grid;grid-template-columns:{{ ovBotCols }};gap:24px;margin-top:24px;align-items:start;">
+          <section style="background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;padding:22px 24px;">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;">
+              <div style="font-size:15px;font-weight:600;">Portfolio</div>
+              <button onClick="{{ goPortfolio }}" style="font-size:12.5px;color:#2E5D45;font-weight:600;" style-hover="text-decoration:underline;">View all →</button>
+            </div>
+            <div style="font-family:'Fraunces',serif;font-size:36px;font-weight:600;letter-spacing:-.02em;margin-top:14px;font-variant-numeric:tabular-nums;">{{ portfolioValue }}</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+              <span style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:14px;color:#2F7A4F;">{{ portfolioPnl }}</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#2F7A4F;">({{ portfolioPnlPct }})</span>
+              <span style="font-size:12.5px;color:#9C9280;">all-time</span>
+            </div>
+            <div style="margin-top:14px;font-size:12px;color:#A89E8B;display:flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Values from batch refresh · updated 2h ago</div>
+          </section>
+
+          <section style="background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;padding:22px 24px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+              <div style="font-size:15px;font-weight:600;">Recent activity</div>
+              <button onClick="{{ goPending }}" style="display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:#B06A2C;" style-hover="opacity:.75;"><span style="width:7px;height:7px;border-radius:50%;background:#B06A2C;animation:mp-pulse 1.6s infinite;"></span>{{ pendingCount }} pending</button>
+            </div>
+            <div>
+              <sc-for list="{{ recent }}" as="r" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid #E9E1D2;">
+                  <div style="width:34px;height:34px;border-radius:9px;background:{{ r.iconBg }};color:{{ r.iconColor }};display:flex;align-items:center;justify-content:center;flex:0 0 34px;">
+                    <sc-if value="{{ r.isInvest }}" hint-placeholder-val="{{ false }}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l5-5 4 4 7-8"/><path d="M20 8h-4M20 8v4"/></svg></sc-if>
+                    <sc-if value="{{ r.isExpense }}" hint-placeholder-val="{{ true }}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></sc-if>
+                  </div>
+                  <div style="flex:1;min-width:0;">
+                    <div style="font-size:13.5px;font-weight:500;color:#2C2922;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ r.note }}</div>
+                    <div style="font-size:12px;color:#9C9280;">{{ r.category }} · {{ r.dateLabel }}</div>
+                  </div>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:13.5px;font-weight:500;color:{{ r.amtColor }};font-variant-numeric:tabular-nums;white-space:nowrap;">{{ r.amountLabel }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </section>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ TRANSACTIONS ============ -->
+      <sc-if value="{{ isTx }}" hint-placeholder-val="{{ true }}">
+      <div style="">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:18px;">
+          <div style="display:flex;background:#E7DFD0;border-radius:9px;padding:3px;gap:2px;">
+            <sc-for list="{{ txFilters }}" as="f" hint-placeholder-count="3">
+              <button onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }}</button>
+            </sc-for>
+          </div>
+          <sc-if value="{{ txSearchActive }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#6B6358;background:#F1E9D6;border:1px solid #E0CFA8;border-radius:8px;padding:6px 10px;">Filtered: <strong>{{ search }}</strong> <button onClick="{{ clearSearch }}" style="color:#B06A2C;font-weight:600;">clear</button></div>
+          </sc-if>
+          <div style="flex:1;"></div>
+          <button onClick="{{ onExportCsv }}" style="display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:#2C2922;border:1px solid #D8CFBE;border-radius:9px;padding:8px 13px;background:#F6F2EA;" style-hover="background:#EBE3D4;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 4 5-4"/><path d="M5 21h14"/></svg>Export CSV</button>
+        </div>
+
+        <div style="background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;overflow:hidden;">
+          <!-- header row (desktop) -->
+          <sc-if value="{{ showSidebar }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid;grid-template-columns:96px 150px 1fr 110px 130px 84px;gap:14px;padding:13px 22px;border-bottom:1px solid #E2D9C8;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:#9C9280;font-weight:600;">
+            <span>Time</span><span>Category</span><span>Note</span><span>Type</span><span style="text-align:right;">Amount</span><span></span>
+          </div>
+          </sc-if>
+
+          <sc-if value="{{ txLoading }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:8px 22px;">
+              <sc-for list="{{ skeletons }}" as="s" hint-placeholder-count="6"><div class="mp-skel" style="height:20px;margin:14px 0;"></div></sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ txEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:64px 22px;text-align:center;">
+              <div style="width:50px;height:50px;border-radius:13px;background:#EBE3D4;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A89E8B" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></div>
+              <div style="font-family:'Fraunces',serif;font-size:19px;font-weight:600;">No matching entries</div>
+              <div style="font-size:13.5px;color:#9C9280;margin-top:5px;">Try a different filter or clear your search.</div>
+              <button onClick="{{ resetFilters }}" style="margin-top:16px;font-size:13px;font-weight:600;color:#2E5D45;border:1px solid #C7D2C2;border-radius:8px;padding:8px 14px;" style-hover="background:#ECEFE8;">Reset filters</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ txShowRows }}" hint-placeholder-val="{{ true }}">
+          <div>
+            <sc-for list="{{ txRows }}" as="t" hint-placeholder-count="8">
+              <div style="{{ t.rowStyle }}">
+                <!-- VIEW MODE -->
+                <sc-if value="{{ t.viewing }}" hint-placeholder-val="{{ true }}">
+                  <div style="{{ t.gridStyle }}">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#857C6B;{{ t.cellTime }}">{{ t.time }}<span style="color:#B5AB97;"> · {{ t.dateLabel }}</span></span>
+                    <span style="{{ t.catStyle }}">{{ t.category }}</span>
+                    <span style="font-size:13.5px;color:#3A362E;{{ t.noteStyle }}">{{ t.note }}</span>
+                    <span style="{{ t.typeTagStyle }}">{{ t.typeLabel }}</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:500;text-align:right;color:{{ t.amtColor }};font-variant-numeric:tabular-nums;{{ t.amtCell }}">{{ t.amountLabel }}</span>
+                    <span style="display:flex;gap:4px;justify-content:flex-end;{{ t.actCell }}">
+                      <button onClick="{{ t.onEdit }}" title="Edit" style="width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#857C6B;" style-hover="background:#EBE3D4;color:#2E5D45;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
+                      <button onClick="{{ t.onDelete }}" title="Delete" style="width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#857C6B;" style-hover="background:#F3E1DE;color:#B23B36;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg></button>
+                    </span>
+                  </div>
+                </sc-if>
+                <!-- EDIT MODE -->
+                <sc-if value="{{ t.editing }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:14px 22px;background:#F1ECDF;border-left:3px solid #2E5D45;">
+                    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;">
+                      <label style="display:flex;flex-direction:column;gap:5px;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:#857C6B;font-weight:600;">Category
+                        <select value="{{ draftCategory }}" onChange="{{ onDraftCategory }}" style="font-size:14px;padding:8px 10px;border:1px solid #D2C8B5;border-radius:8px;background:#FBF8F1;min-width:150px;">
+                          <sc-for list="{{ categories }}" as="c" hint-placeholder-count="6"><option value="{{ c }}">{{ c }}</option></sc-for>
+                        </select>
+                      </label>
+                      <label style="display:flex;flex-direction:column;gap:5px;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:#857C6B;font-weight:600;flex:1;min-width:160px;">Note
+                        <input value="{{ draftNote }}" onInput="{{ onDraftNote }}" style="font-size:14px;padding:8px 10px;border:1px solid #D2C8B5;border-radius:8px;background:#FBF8F1;width:100%;"/>
+                      </label>
+                      <label style="display:flex;flex-direction:column;gap:5px;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:#857C6B;font-weight:600;">Amount ₹
+                        <input value="{{ draftAmount }}" onInput="{{ onDraftAmount }}" inputmode="numeric" style="font-size:14px;padding:8px 10px;border:1px solid #D2C8B5;border-radius:8px;background:#FBF8F1;width:130px;font-family:'IBM Plex Mono',monospace;"/>
+                      </label>
+                      <div style="display:flex;gap:8px;margin-left:auto;">
+                        <button onClick="{{ onCancelEdit }}" style="font-size:13px;font-weight:600;color:#6B6358;border:1px solid #D2C8B5;border-radius:8px;padding:9px 15px;" style-hover="background:#EBE3D4;">Cancel</button>
+                        <button onClick="{{ onSaveEdit }}" style="font-size:13px;font-weight:600;color:#F6F2EA;background:#2E5D45;border-radius:8px;padding:9px 17px;" style-hover="background:#244A37;">Save</button>
+                      </div>
+                    </div>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+          </sc-if>
+        </div>
+        <div style="font-size:12.5px;color:#9C9280;margin-top:12px;padding:0 4px;">{{ txCountLabel }}</div>
+      </div>
+      </sc-if>
+
+      <!-- ============ SPENDING ============ -->
+      <sc-if value="{{ isSpending }}" hint-placeholder-val="{{ false }}">
+      <div style="">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px;">
+          <button onClick="{{ spendPrev }}" aria-label="Previous month" style="width:34px;height:34px;border-radius:8px;border:1px solid #D8CFBE;display:flex;align-items:center;justify-content:center;color:#6B6358;background:#F6F2EA;" style-hover="background:#EBE3D4;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+          <div style="font-family:'Fraunces',serif;font-size:22px;font-weight:600;min-width:160px;text-align:center;">{{ spendMonthLabel }}</div>
+          <button onClick="{{ spendNext }}" aria-label="Next month" style="{{ spendNextStyle }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+          <div style="flex:1;"></div>
+          <div style="text-align:right;">
+            <div style="font-size:12px;color:#9C9280;">Total spent</div>
+            <div style="font-family:'Fraunces',serif;font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;">{{ spendTotal }}</div>
+          </div>
+        </div>
+
+        <section style="background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;padding:24px 26px;">
+          <div style="font-size:13px;color:#857C6B;margin-bottom:14px;">Proportion of spend</div>
+          <div style="height:18px;border-radius:7px;overflow:hidden;display:flex;background:#E5DDCF;">
+            <sc-for list="{{ spendSegments }}" as="s" hint-placeholder-count="6"><div title="{{ s.tip }}" style="width:{{ s.w }};background:{{ s.color }};"></div></sc-for>
+          </div>
+          <div style="margin-top:26px;display:flex;flex-direction:column;">
+            <sc-for list="{{ spendList }}" as="s" hint-placeholder-count="6">
+              <button onClick="{{ s.onClick }}" style="display:grid;grid-template-columns:14px 1fr 120px 70px 18px;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid #E9E1D2;text-align:left;width:100%;" style-hover="opacity:.7;">
+                <span style="width:11px;height:11px;border-radius:3px;background:{{ s.color }};"></span>
+                <span style="font-size:14px;font-weight:500;color:#2C2922;">{{ s.category }}</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;">{{ s.amountLabel }}</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#9C9280;text-align:right;">{{ s.pctLabel }}</span>
+                <span style="color:#C3B9A4;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+              </button>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+      </sc-if>
+
+      <!-- ============ MONTHLY INSIGHTS ============ -->
+      <sc-if value="{{ isInsights }}" hint-placeholder-val="{{ false }}">
+      <div style="">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px;">
+          <button onClick="{{ insightPrev }}" aria-label="Previous month" style="{{ insightPrevStyle }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+          <div style="font-family:'Fraunces',serif;font-size:22px;font-weight:600;min-width:172px;text-align:center;">{{ iLabel }}</div>
+          <button onClick="{{ insightNext }}" aria-label="Next month" style="{{ insightNextStyle }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+        </div>
+
+        <sc-if value="{{ iEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center;padding:74px 22px;background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;">
+            <div style="width:52px;height:52px;border-radius:14px;background:#EBE3D4;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A89E8B" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M9 16v-3"/><path d="M14 16v-3"/></svg></div>
+            <div style="font-family:'Fraunces',serif;font-size:21px;font-weight:600;">Nothing logged in {{ iLabel }} yet</div>
+            <div style="font-size:13.5px;color:#9C9280;margin-top:6px;max-width:340px;margin-left:auto;margin-right:auto;line-height:1.5;">Once you text a few expenses or investments this month, your full report appears here.</div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ iHasData }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <!-- digest -->
+          <div style="background:#1C1A16;color:#EFE9DD;border-radius:14px;padding:20px 24px;margin-bottom:24px;display:flex;align-items:flex-start;gap:14px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D9A766" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 20px;margin-top:2px;"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 8v4l3 2"/><path d="M16 3h5v5"/></svg>
+            <div style="font-family:'Fraunces',serif;font-size:19px;line-height:1.5;font-weight:400;letter-spacing:-.01em;">{{ iDigest }}</div>
+          </div>
+
+          <!-- cash-flow strip -->
+          <section style="background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;padding:20px 24px;margin-bottom:24px;">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+              <div style="font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:#9C9280;font-weight:600;">Money out this month</div>
+              <div style="font-family:'Fraunces',serif;font-size:24px;font-weight:600;font-variant-numeric:tabular-nums;">{{ iOutLabel }}</div>
+            </div>
+            <div style="margin-top:14px;height:12px;border-radius:7px;overflow:hidden;display:flex;background:#E5DDCF;">
+              <div style="width:{{ iSpendShareW }};background:#B06A2C;"></div>
+              <div style="width:{{ iInvShareW }};background:#2E5D45;"></div>
+            </div>
+            <div style="margin-top:11px;display:flex;gap:22px;font-size:12.5px;color:#6B6358;flex-wrap:wrap;">
+              <span style="display:inline-flex;align-items:center;gap:7px;"><span style="width:9px;height:9px;border-radius:2px;background:#B06A2C;"></span>Spent {{ iSpendLabel }}</span>
+              <span style="display:inline-flex;align-items:center;gap:7px;"><span style="width:9px;height:9px;border-radius:2px;background:#2E5D45;"></span>Invested {{ iInvLabel }} <span style="color:#9C9280;">(moved to assets, not gone)</span></span>
+            </div>
+          </section>
+
+          <!-- two stories -->
+          <div style="display:grid;grid-template-columns:{{ iStoryCols }};gap:24px;align-items:start;">
+            <!-- SPENDING -->
+            <section style="background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;padding:24px 26px;">
+              <div style="display:flex;align-items:center;gap:9px;margin-bottom:16px;"><span style="width:9px;height:9px;border-radius:50%;background:#B06A2C;"></span><span style="font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:#A06628;font-weight:700;">Spending</span></div>
+              <div style="font-family:'Fraunces',serif;font-size:40px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1;">{{ iSpendLabel }}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:14px;font-size:13px;">
+                <sc-if value="{{ iDeltaShown }}" hint-placeholder-val="{{ true }}"><span style="color:#6B6358;">vs last month <strong style="color:{{ iDeltaColor }};font-family:'IBM Plex Mono',monospace;">{{ iDeltaArrow }} {{ iDeltaPctLabel }}</strong> <span style="color:#9C9280;">({{ iDeltaLabel }})</span></span></sc-if>
+                <sc-if value="{{ iAvgShown }}" hint-placeholder-val="{{ true }}"><span style="color:#6B6358;">vs 6-mo avg <strong style="font-family:'IBM Plex Mono',monospace;">{{ iAvgPctLabel }}</strong> <span style="color:#9C9280;">({{ iAvgLabel }})</span></span></sc-if>
+                <span style="color:#6B6358;"><strong style="font-family:'IBM Plex Mono',monospace;">{{ iExpCount }}</strong> entries</span>
+              </div>
+
+              <div style="font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:#9C9280;font-weight:600;margin:24px 0 12px;">Daily trend</div>
+              <div style="display:flex;align-items:flex-end;gap:4px;height:84px;">
+                <sc-for list="{{ iDailyBars }}" as="d" hint-placeholder-count="15">
+                  <div title="{{ d.tip }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;position:relative;">
+                    <sc-if value="{{ d.out }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:-15px;font-size:9.5px;font-weight:600;color:#B06A2C;font-family:'IBM Plex Mono',monospace;">{{ d.outLabel }}</span></sc-if>
+                    <div style="width:100%;max-width:14px;height:{{ d.h }};background:{{ d.color }};border-radius:3px 3px 0 0;"></div>
+                  </div>
+                </sc-for>
+              </div>
+
+              <div style="font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:#9C9280;font-weight:600;margin:24px 0 8px;">By category</div>
+              <div style="display:flex;flex-direction:column;">
+                <sc-for list="{{ iCatList }}" as="c" hint-placeholder-count="6">
+                  <button onClick="{{ c.onClick }}" style="display:flex;flex-direction:column;gap:7px;padding:10px 0;border-bottom:1px solid #E9E1D2;text-align:left;width:100%;" style-hover="opacity:.72;">
+                    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;">
+                      <span style="font-size:13px;font-weight:500;color:#3A362E;">{{ c.category }}</span>
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;font-variant-numeric:tabular-nums;">{{ c.amountLabel }}<span style="color:#A89E8B;font-size:11px;margin-left:7px;">{{ c.pctLabel }}</span></span>
+                    </div>
+                    <div style="height:4px;border-radius:3px;background:#E5DDCF;overflow:hidden;"><div style="width:{{ c.barW }};height:100%;background:{{ c.barColor }};border-radius:3px;"></div></div>
+                  </button>
+                </sc-for>
+              </div>
+
+              <div style="font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:#9C9280;font-weight:600;margin:24px 0 8px;">Biggest expenses</div>
+              <div style="display:flex;flex-direction:column;gap:2px;">
+                <sc-for list="{{ iBigList }}" as="b" hint-placeholder-count="3">
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #E9E1D2;">
+                    <div style="min-width:0;"><div style="font-size:13.5px;font-weight:500;color:#2C2922;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ b.note }}</div><div style="font-size:12px;color:#9C9280;">{{ b.category }}</div></div>
+                    <div style="font-family:'IBM Plex Mono',monospace;font-size:13.5px;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap;">{{ b.amountLabel }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </section>
+
+            <!-- INVESTING -->
+            <section style="background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;padding:24px 26px;">
+              <div style="display:flex;align-items:center;gap:9px;margin-bottom:16px;"><span style="width:9px;height:9px;border-radius:50%;background:#2E5D45;"></span><span style="font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:#2E5D45;font-weight:700;">Investing</span></div>
+              <div style="font-family:'Fraunces',serif;font-size:40px;font-weight:600;letter-spacing:-.02em;color:#2E5D45;font-variant-numeric:tabular-nums;line-height:1;">{{ iInvLabel }}</div>
+              <div style="font-size:13px;color:#857C6B;margin-top:11px;line-height:1.5;">New money contributed this month — <strong>not</strong> your portfolio value. <button onClick="{{ goPortfolio }}" style="color:#2E5D45;font-weight:600;" style-hover="text-decoration:underline;">See total value →</button></div>
+
+              <div style="font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:#9C9280;font-weight:600;margin:26px 0 12px;">By type</div>
+              <div style="height:14px;border-radius:7px;overflow:hidden;display:flex;background:#E5DDCF;margin-bottom:18px;">
+                <div style="width:{{ iMfW }};background:#2E5D45;"></div>
+                <div style="width:{{ iStockW }};background:#7B9B6E;"></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:2px;">
+                <div style="display:grid;grid-template-columns:13px 1fr auto 54px;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid #E9E1D2;">
+                  <span style="width:11px;height:11px;border-radius:3px;background:#2E5D45;"></span>
+                  <span style="font-size:14px;font-weight:500;color:#2C2922;">Mutual Fund</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;">{{ iInvMfLabel }}</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#9C9280;text-align:right;">{{ iMfPctLabel }}</span>
+                </div>
+                <div style="display:grid;grid-template-columns:13px 1fr auto 54px;gap:12px;align-items:center;padding:11px 0;">
+                  <span style="width:11px;height:11px;border-radius:3px;background:#7B9B6E;"></span>
+                  <span style="font-size:14px;font-weight:500;color:#2C2922;">Stocks / Equity</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;">{{ iInvStockLabel }}</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#9C9280;text-align:right;">{{ iStockPctLabel }}</span>
+                </div>
+              </div>
+              <div style="margin-top:22px;background:#EEF2EB;border:1px solid #D5E0CE;border-radius:10px;padding:13px 15px;font-size:12.5px;color:#3F5A48;line-height:1.5;">Contributions are logged the moment you message the bot. Market value updates on the scheduled batch refresh — see <button onClick="{{ goPortfolio }}" style="color:#2E5D45;font-weight:600;" style-hover="text-decoration:underline;">Portfolio</button>.</div>
+            </section>
+          </div>
+
+          <!-- month over month -->
+          <div style="display:grid;grid-template-columns:{{ iMomCols }};gap:24px;margin-top:24px;align-items:start;">
+            <section style="background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;padding:22px 24px;">
+              <div style="display:flex;align-items:center;gap:9px;margin-bottom:4px;"><span style="width:8px;height:8px;border-radius:2px;background:#B06A2C;"></span><div style="font-size:14px;font-weight:600;">Spend · last 6 months</div></div>
+              <div style="font-size:12px;color:#9C9280;margin-bottom:18px;">Direction, not just this month</div>
+              <div style="display:flex;align-items:flex-end;gap:10px;height:120px;">
+                <sc-for list="{{ iSpendBars }}" as="m" hint-placeholder-count="6">
+                  <div title="{{ m.vLabel }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:8px;">
+                    <div style="width:100%;max-width:34px;height:{{ m.h }};background:{{ m.barColor }};border-radius:5px 5px 0 0;"></div>
+                    <span style="font-size:11px;color:{{ m.labelColor }};font-family:'IBM Plex Mono',monospace;font-weight:500;">{{ m.label }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </section>
+            <section style="background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;padding:22px 24px;">
+              <div style="display:flex;align-items:center;gap:9px;margin-bottom:4px;"><span style="width:8px;height:8px;border-radius:2px;background:#2E5D45;"></span><div style="font-size:14px;font-weight:600;">Invested · last 6 months</div></div>
+              <div style="font-size:12px;color:#9C9280;margin-bottom:18px;">New money contributed each month</div>
+              <div style="display:flex;align-items:flex-end;gap:10px;height:120px;">
+                <sc-for list="{{ iInvestBars }}" as="m" hint-placeholder-count="6">
+                  <div title="{{ m.vLabel }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:8px;">
+                    <div style="width:100%;max-width:34px;height:{{ m.h }};background:{{ m.barColor }};border-radius:5px 5px 0 0;"></div>
+                    <span style="font-size:11px;color:{{ m.labelColor }};font-family:'IBM Plex Mono',monospace;font-weight:500;">{{ m.label }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </section>
+          </div>
+        </div>
+        </sc-if>
+      </div>
+      </sc-if>
+
+      <!-- ============ PORTFOLIO ============ -->
+      <sc-if value="{{ isPortfolio }}" hint-placeholder-val="{{ false }}">
+      <div style="">
+        <div style="display:grid;grid-template-columns:{{ pfTopCols }};gap:20px;margin-bottom:24px;">
+          <div style="background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;padding:20px 22px;">
+            <div style="font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#9C9280;font-weight:600;">Invested</div>
+            <div style="font-family:'Fraunces',serif;font-size:30px;font-weight:600;margin-top:9px;font-variant-numeric:tabular-nums;">{{ portfolioInvested }}</div>
+          </div>
+          <div style="background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;padding:20px 22px;">
+            <div style="font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#9C9280;font-weight:600;">Current value</div>
+            <div style="font-family:'Fraunces',serif;font-size:30px;font-weight:600;margin-top:9px;font-variant-numeric:tabular-nums;">{{ portfolioValue }}</div>
+          </div>
+          <div style="background:#1C1A16;color:#EFE9DD;border-radius:14px;padding:20px 22px;">
+            <div style="font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#9A9281;font-weight:600;">Total P&amp;L</div>
+            <div style="font-family:'Fraunces',serif;font-size:30px;font-weight:600;margin-top:9px;color:#7BC894;font-variant-numeric:tabular-nums;">{{ portfolioPnl }}</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#7BC894;margin-top:3px;">{{ portfolioPnlPct }} all-time</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:#A0967F;margin-bottom:12px;padding:0 2px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg>
+          Holdings priced by scheduled batch refresh — <strong style="color:#6B6358;">updated 2h ago</strong>, not real-time.
+        </div>
+
+        <div style="background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;overflow:hidden;">
+          <sc-if value="{{ showSidebar }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid;grid-template-columns:2fr 1fr 1.2fr 1.2fr 1.3fr;gap:14px;padding:13px 24px;border-bottom:1px solid #E2D9C8;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:#9C9280;font-weight:600;">
+            <span>Instrument</span><span>Type</span><span style="text-align:right;">Invested</span><span style="text-align:right;">Current</span><span style="text-align:right;">P&amp;L</span>
+          </div>
+          </sc-if>
+          <sc-for list="{{ holdings }}" as="h" hint-placeholder-count="5">
+            <div style="{{ h.gridStyle }}">
+              <div style="min-width:0;">
+                <div style="font-size:14px;font-weight:600;color:#2C2922;">{{ h.name }}</div>
+                <div style="font-size:12px;color:#9C9280;">{{ h.ticker }}</div>
+              </div>
+              <div style="{{ h.typeCell }}"><span style="{{ h.typeTagStyle }}">{{ h.type }}</span></div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:13.5px;text-align:right;color:#6B6358;font-variant-numeric:tabular-nums;{{ h.lblInvested }}">{{ h.investedLabel }}</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:13.5px;text-align:right;font-weight:500;font-variant-numeric:tabular-nums;{{ h.lblCurrent }}">{{ h.currentLabel }}</div>
+              <div style="text-align:right;{{ h.lblPnl }}">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:13.5px;font-weight:600;color:{{ h.pnlColor }};font-variant-numeric:tabular-nums;">{{ h.pnlLabel }}</div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:{{ h.pnlColor }};">{{ h.pnlPctLabel }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ PENDING ============ -->
+      <sc-if value="{{ isPending }}" hint-placeholder-val="{{ false }}">
+      <div style="">
+        <div style="background:#F4ECDA;border:1px solid #E5D2A6;border-radius:13px;padding:15px 18px;display:flex;align-items:flex-start;gap:12px;margin-bottom:22px;">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#B06A2C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 19px;margin-top:1px;"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <div style="font-size:13.5px;color:#6B5A38;line-height:1.5;">These entries are in their <strong>5-minute grace window</strong>. They commit automatically when the timer runs out — edit or cancel before then.</div>
+        </div>
+
+        <sc-if value="{{ pendingEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center;padding:70px 22px;background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;">
+            <div style="width:52px;height:52px;border-radius:14px;background:#E7EFE5;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2E5D45" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+            <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;">All caught up</div>
+            <div style="font-size:13.5px;color:#9C9280;margin-top:5px;">Nothing pending. New entries from Telegram appear here for 5 minutes.</div>
+          </div>
+        </sc-if>
+
+        <div style="display:grid;grid-template-columns:{{ pendCols }};gap:18px;">
+          <sc-for list="{{ pendingCards }}" as="p" hint-placeholder-count="2">
+            <div style="background:#F6F2EA;border:1px solid #E5D2A6;border-radius:14px;padding:20px 22px;position:relative;overflow:hidden;">
+              <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#EFE0BE;"><div style="height:100%;width:{{ p.barW }};background:#C68A3A;transition:width 1s linear;"></div></div>
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-top:6px;">
+                <div>
+                  <div style="font-family:'Fraunces',serif;font-size:30px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1;">{{ p.amountLabel }}</div>
+                  <div style="margin-top:8px;display:flex;align-items:center;gap:8px;">
+                    <span style="font-size:13.5px;font-weight:600;color:#2C2922;">{{ p.category }}</span>
+                    <span style="{{ p.typeTagStyle }}">{{ p.typeLabel }}</span>
+                  </div>
+                </div>
+                <div style="text-align:right;">
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;color:#A9701F;font-variant-numeric:tabular-nums;line-height:1;">{{ p.mmss }}</div>
+                  <div style="font-size:11px;color:#B08A4C;letter-spacing:.04em;text-transform:uppercase;margin-top:4px;">left</div>
+                </div>
+              </div>
+
+              <div style="margin-top:16px;background:#F1EBDD;border:1px solid #E7DECB;border-radius:9px;padding:10px 12px;display:flex;align-items:center;gap:9px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7E96D9" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 15px;"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#5C5446;">“{{ p.message }}”</span>
+              </div>
+
+              <sc-if value="{{ p.editing }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;">
+                  <label style="display:flex;flex-direction:column;gap:5px;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:#857C6B;font-weight:600;">Category
+                    <select value="{{ p.draftCategory }}" onChange="{{ p.onDraftCategory }}" style="font-size:13.5px;padding:7px 9px;border:1px solid #D2C8B5;border-radius:7px;background:#FBF8F1;">
+                      <sc-for list="{{ categories }}" as="c" hint-placeholder-count="6"><option value="{{ c }}">{{ c }}</option></sc-for>
+                    </select>
+                  </label>
+                  <label style="display:flex;flex-direction:column;gap:5px;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:#857C6B;font-weight:600;">Amount ₹
+                    <input value="{{ p.draftAmount }}" onInput="{{ p.onDraftAmount }}" inputmode="numeric" style="font-size:13.5px;padding:7px 9px;border:1px solid #D2C8B5;border-radius:7px;background:#FBF8F1;width:110px;font-family:'IBM Plex Mono',monospace;"/>
+                  </label>
+                  <button onClick="{{ p.onSave }}" style="font-size:13px;font-weight:600;color:#F6F2EA;background:#2E5D45;border-radius:7px;padding:8px 15px;margin-left:auto;" style-hover="background:#244A37;">Save</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ p.viewing }}" hint-placeholder-val="{{ true }}">
+                <div style="margin-top:16px;display:flex;gap:10px;">
+                  <button onClick="{{ p.onEdit }}" style="flex:1;font-size:13.5px;font-weight:600;color:#2C2922;border:1px solid #D8CFBE;border-radius:9px;padding:10px;background:#F6F2EA;display:flex;align-items:center;justify-content:center;gap:7px;" style-hover="background:#EBE3D4;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Edit</button>
+                  <button onClick="{{ p.onCancel }}" style="flex:1;font-size:13.5px;font-weight:600;color:#B23B36;border:1px solid #E3C4BF;border-radius:9px;padding:10px;background:#F6F2EA;display:flex;align-items:center;justify-content:center;gap:7px;" style-hover="background:#F3E1DE;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>Cancel</button>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ PRIVACY & TRUST ============ -->
+      <sc-if value="{{ isPrivacy }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:760px;">
+        <p style="font-family:'Fraunces',serif;font-size:22px;line-height:1.45;font-weight:400;color:#2C2922;margin:0 0 8px;letter-spacing:-.01em;">How your money data flows — in plain language.</p>
+        <p style="font-size:14.5px;color:#6B6358;line-height:1.6;margin:0 0 34px;">No dark patterns, no buried clauses. Here is exactly what happens to a message after you send it.</p>
+
+        <div style="display:flex;flex-direction:column;gap:2px;">
+          <sc-for list="{{ privacySteps }}" as="s" hint-placeholder-count="3">
+            <div style="display:grid;grid-template-columns:46px 1fr;gap:20px;padding:24px 0;border-top:1px solid #E2D9C8;">
+              <div style="font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:#C3B9A4;line-height:1;">{{ s.num }}</div>
+              <div>
+                <div style="font-size:16px;font-weight:700;color:#1C1A16;margin-bottom:7px;">{{ s.title }}</div>
+                <div style="font-size:14.5px;color:#544D42;line-height:1.62;">{{ s.body }}</div>
+                <div style="margin-top:11px;display:inline-flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#2E5D45;background:#E9EFE6;border-radius:7px;padding:6px 10px;">{{ s.tag }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="margin-top:30px;background:#F4ECDA;border:1px solid #E5D2A6;border-radius:13px;padding:20px 22px;">
+          <div style="display:flex;align-items:center;gap:9px;font-size:13px;font-weight:700;color:#8A5A1E;letter-spacing:.02em;text-transform:uppercase;margin-bottom:9px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>An honest limitation</div>
+          <div style="font-size:14px;color:#6B5A38;line-height:1.62;">During beta, the AI fallback provider may retain description text for a short window on their side. <strong>Amounts are never sent — masked before the call, re-attached on our servers.</strong> Production moves to a zero-retention tier or an on-device model. We'll tell you the day it changes.</div>
+        </div>
+
+        <div style="margin-top:20px;background:#F6F2EA;border:1px solid #E2D9C8;border-radius:13px;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+          <div>
+            <div style="font-size:15px;font-weight:700;">Your data is yours</div>
+            <div style="font-size:13.5px;color:#9C9280;margin-top:3px;">Export everything as a CSV, any time. No lock-in.</div>
+          </div>
+          <button onClick="{{ onExportCsv }}" style="display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;color:#F6F2EA;background:#2E5D45;border-radius:9px;padding:11px 18px;" style-hover="background:#244A37;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 4 5-4"/><path d="M5 21h14"/></svg>Download CSV</button>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ SETTINGS ============ -->
+      <sc-if value="{{ isSettings }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:720px;">
+        <section style="background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;padding:24px 26px;margin-bottom:20px;">
+          <div style="font-size:15px;font-weight:700;margin-bottom:18px;">Account</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 0;border-bottom:1px solid #E9E1D2;">
+            <div><div style="font-size:13.5px;font-weight:500;">Phone number</div><div style="font-size:12.5px;color:#9C9280;">Linked to Telegram</div></div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#3A362E;">+91 98••• ••432</div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 0;">
+            <div><div style="font-size:13.5px;font-weight:500;">Telegram identity</div><div style="font-size:12.5px;color:#9C9280;">Bot you message to log</div></div>
+            <div style="display:flex;align-items:center;gap:8px;"><span style="width:7px;height:7px;border-radius:50%;background:#2F7A4F;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#3A362E;">@moneyplant_bot</span></div>
+          </div>
+        </section>
+
+        <section style="background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;padding:24px 26px;margin-bottom:20px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+            <div style="font-size:15px;font-weight:700;">Categories</div>
+            <div style="font-size:12.5px;color:#9C9280;">{{ totalCatCount }} total</div>
+          </div>
+          <div style="font-size:12.5px;color:#9C9280;margin-bottom:16px;">The curated list the parser matches against — unmatched messages fall to “Other / Misc” or the AI fallback.</div>
+
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:11px;"><span style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#857C6B;font-weight:700;">Expenses</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#A89E8B;">{{ expCatCount }}</span></div>
+          <div style="display:flex;flex-wrap:wrap;gap:9px;margin-bottom:22px;">
+            <sc-for list="{{ expenseChips }}" as="c" hint-placeholder-count="12">
+              <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:#3A362E;border:1px solid #DDD3C0;border-radius:8px;padding:7px 11px;background:#FBF8F1;">{{ c.name }}<button onClick="{{ c.onRemove }}" aria-label="Remove" style="color:#B5AB97;display:flex;" style-hover="color:#B23B36;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></span>
+            </sc-for>
+          </div>
+
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:11px;"><span style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#2E5D45;font-weight:700;">Investments</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#A89E8B;">{{ invCatCount }}</span></div>
+          <div style="display:flex;flex-wrap:wrap;gap:9px;margin-bottom:20px;">
+            <sc-for list="{{ investChips }}" as="c" hint-placeholder-count="8">
+              <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:#214333;border:1px solid #CBD8C4;border-radius:8px;padding:7px 11px;background:#EEF2EB;">{{ c.name }}<button onClick="{{ c.onRemove }}" aria-label="Remove" style="color:#9DB39A;display:flex;" style-hover="color:#B23B36;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></span>
+            </sc-for>
+          </div>
+
+          <div style="display:flex;gap:9px;">
+            <input value="{{ newCat }}" onInput="{{ onNewCat }}" placeholder="Add an expense category…" style="flex:1;font-size:13.5px;padding:9px 12px;border:1px solid #D8CFBE;border-radius:9px;background:#FBF8F1;outline:none;"/>
+            <button onClick="{{ onAddCat }}" style="font-size:13.5px;font-weight:600;color:#F6F2EA;background:#2E5D45;border-radius:9px;padding:9px 18px;" style-hover="background:#244A37;">Add</button>
+          </div>
+        </section>
+
+        <section style="background:#F6F2EA;border:1px solid #E2D9C8;border-radius:14px;padding:20px 26px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+          <div><div style="font-size:15px;font-weight:700;">Export your data</div><div style="font-size:13px;color:#9C9280;margin-top:3px;">All transactions and holdings as CSV.</div></div>
+          <button onClick="{{ onExportCsv }}" style="display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;color:#2C2922;border:1px solid #D8CFBE;border-radius:9px;padding:10px 16px;background:#F6F2EA;" style-hover="background:#EBE3D4;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 4 5-4"/><path d="M5 21h14"/></svg>Download CSV</button>
+        </section>
+
+        <section style="border:1px solid #E3C4BF;border-radius:14px;padding:24px 26px;background:#FAF1EF;">
+          <div style="font-size:13px;font-weight:700;color:#A33731;letter-spacing:.03em;text-transform:uppercase;margin-bottom:16px;">Danger zone</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid #ECD7D3;">
+            <div><div style="font-size:13.5px;font-weight:500;">Change phone number</div><div style="font-size:12.5px;color:#A88;">Re-verification required via Telegram.</div></div>
+            <button style="font-size:13px;font-weight:600;color:#A33731;border:1px solid #E3C4BF;border-radius:8px;padding:8px 14px;" style-hover="background:#F3E1DE;">Change</button>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 0;">
+            <div><div style="font-size:13.5px;font-weight:500;">Delete account</div><div style="font-size:12.5px;color:#A88;">Permanently erases all encrypted data.</div></div>
+            <button style="font-size:13px;font-weight:600;color:#F6F2EA;background:#B23B36;border-radius:8px;padding:8px 14px;" style-hover="background:#9A302C;">Delete</button>
+          </div>
+        </section>
+      </div>
+      </sc-if>
+
+    </div>
+    </div>
+  </main>
+
+  <!-- ============ MOBILE BOTTOM TAB BAR ============ -->
+  <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+  <nav style="position:fixed;bottom:0;left:0;right:0;z-index:40;background:#F6F2EA;border-top:1px solid #E2D9C8;display:flex;padding:7px 6px calc(7px + env(safe-area-inset-bottom));justify-content:space-around;">
+    <button onClick="{{ tab.overview.onClick }}" style="{{ tab.overview.style }}">
+      <span style="display:flex;width:21px;height:21px;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="9" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="12" width="8" height="9" rx="1.5"/><rect x="3" y="16" width="8" height="5" rx="1.5"/></svg></span>
+      <span style="font-size:10px;font-weight:600;">Overview</span>
+    </button>
+    <button onClick="{{ tab.transactions.onClick }}" style="{{ tab.transactions.style }}">
+      <span style="display:flex;width:21px;height:21px;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16l-2.5-1.5L15 20l-2.5-1.5L10 20l-2.5-1.5L5 20l-1-1Z"/><path d="M8 9h8M8 13h5"/></svg></span>
+      <span style="font-size:10px;font-weight:600;">Ledger</span>
+    </button>
+    <button onClick="{{ tab.portfolio.onClick }}" style="{{ tab.portfolio.style }}">
+      <span style="display:flex;width:21px;height:21px;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-5 4 4 7-8"/><path d="M20 7h-4M20 7v4"/></svg></span>
+      <span style="font-size:10px;font-weight:600;">Portfolio</span>
+    </button>
+    <button onClick="{{ tab.pending.onClick }}" style="{{ tab.pending.style }}">
+      <span style="display:flex;width:21px;height:21px;position:relative;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><sc-if value="{{ pendingBadge }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:-5px;right:-7px;background:#B06A2C;color:#F6F2EA;font-size:9px;font-weight:700;min-width:15px;height:15px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 3px;font-family:'IBM Plex Mono',monospace;">{{ pendBadgeText }}</span></sc-if></span>
+      <span style="font-size:10px;font-weight:600;">Pending</span>
+    </button>
+    <button onClick="{{ tab.settings.onClick }}" style="{{ tab.settings.style }}">
+      <span style="display:flex;width:21px;height:21px;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 13.5a7.8 7.8 0 0 0 0-3l1.8-1.4-2-3.4-2.1.9a7.6 7.6 0 0 0-2.6-1.5L14 2h-4l-.5 2.6a7.6 7.6 0 0 0-2.6 1.5l-2.1-.9-2 3.4L4.6 10.5a7.8 7.8 0 0 0 0 3l-1.8 1.4 2 3.4 2.1-.9a7.6 7.6 0 0 0 2.6 1.5L10 22h4l.5-2.6a7.6 7.6 0 0 0 2.6-1.5l2.1.9 2-3.4Z"/></svg></span>
+      <span style="font-size:10px;font-weight:600;">Settings</span>
+    </button>
+  </nav>
+  </sc-if>
+
+  <!-- toast -->
+  <sc-if value="{{ toastVisible }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;bottom:{{ toastBottom }};left:50%;transform:translateX(-50%);z-index:60;background:#1C1A16;color:#EFE9DD;border-radius:11px;padding:12px 18px;display:flex;align-items:center;gap:10px;box-shadow:0 12px 34px rgba(28,26,22,.32);animation:mp-toast .3s ease both;font-size:13.5px;font-weight:500;">
+    <span style="width:8px;height:8px;border-radius:50%;background:#7BC894;flex:0 0 8px;"></span>{{ toast }}
+  </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:820}}">
+class Component extends DCLogic {
+  state = {
+    screen: 'overview',
+    vw: typeof window !== 'undefined' ? window.innerWidth : 1280,
+    search: '',
+    filterType: 'all',
+    editingTxId: null,
+    draft: { category: '', note: '', amount: '' },
+    spendIdx: 0,
+    insightIdx: 5,
+    txLoading: true,
+    expenseCategories: ['Food & Dining','Coffee & Snacks','Groceries','Transport','Shopping','Electronics & Gadgets','Bills & Utilities','Rent & Housing','EMI & Loans','Health & Medical','Fitness & Wellness','Entertainment','Subscriptions','Education','Travel','Personal Care','Household & Home','Gifts & Donations','Insurance','Taxes & Fees','Kids & Family','Pets','Other / Misc'],
+    investmentCategories: ['Mutual Fund','Stocks / Equity','Gold','Fixed Deposit / RD','PPF / EPF / NPS','Bonds','Crypto','Real Estate'],
+    newCat: '',
+    now: Date.now(),
+    pending: [
+      { id:'p1', amount:400, category:'Food & Dining', type:'expense', message:'Dining 400', totalSec:252, endsAt:0, editing:false, draftCategory:'Food & Dining', draftAmount:'400' },
+      { id:'p2', amount:40000, category:'Mutual Fund', type:'investment', message:'40k mutual fund', totalSec:138, endsAt:0, editing:false, draftCategory:'Mutual Fund', draftAmount:'40000' }
+    ],
+    transactions: [
+      { id:'t1', day:28, time:'8:12 PM', category:'Food & Dining', note:'Dinner at Toit', type:'expense', amount:1240 },
+      { id:'t2', day:28, time:'9:05 AM', category:'Coffee & Snacks', note:'Blue Tokai flat white', type:'expense', amount:120 },
+      { id:'t3', day:27, time:'7:30 PM', category:'Groceries', note:'BigBasket weekly', type:'expense', amount:2380 },
+      { id:'t4', day:26, time:'6:45 PM', category:'Mutual Fund', note:'Mutual Fund SIP — Parag Parikh', type:'investment', amount:40000 },
+      { id:'t5', day:25, time:'1:15 PM', category:'Transport', note:'Uber to airport', type:'expense', amount:640 },
+      { id:'t6', day:24, time:'11:20 AM', category:'Electronics & Gadgets', note:'MacBook Air M3', type:'expense', amount:66000 },
+      { id:'t7', day:23, time:'8:00 PM', category:'Food & Dining', note:'Swiggy — Mexican', type:'expense', amount:540 },
+      { id:'t8', day:22, time:'10:30 AM', category:'Bills & Utilities', note:'Electricity — June', type:'expense', amount:2150 },
+      { id:'t9', day:21, time:'3:00 PM', category:'Stocks / Equity', note:'HDFC Bank — 25 shares', type:'investment', amount:35000 },
+      { id:'t10', day:20, time:'9:40 AM', category:'Coffee & Snacks', note:'Third Wave', type:'expense', amount:280 },
+      { id:'t11', day:19, time:'7:15 PM', category:'Groceries', note:'Dunzo essentials', type:'expense', amount:870 },
+      { id:'t12', day:18, time:'8:30 PM', category:'Food & Dining', note:'Dining 400', type:'expense', amount:400 },
+      { id:'t13', day:17, time:'12:00 PM', category:'Transport', note:'Metro recharge', type:'expense', amount:500 },
+      { id:'t14', day:16, time:'6:00 PM', category:'Bills & Utilities', note:'Airtel broadband', type:'expense', amount:1199 }
+    ],
+    holdings: [
+      { name:'Parag Parikh Flexi Cap', ticker:'PPFAS · Direct Growth', type:'Mutual Fund', invested:240000, current:298400 },
+      { name:'Nifty 50 Index Fund', ticker:'UTI · Direct Growth', type:'Mutual Fund', invested:120000, current:133900 },
+      { name:'SBI Small Cap', ticker:'SBI · Direct Growth', type:'Mutual Fund', invested:60000, current:71200 },
+      { name:'HDFC Bank', ticker:'HDFCBANK · NSE', type:'Stock', invested:35000, current:37650 },
+      { name:'Infosys', ticker:'INFY · NSE', type:'Stock', invested:48000, current:42300 }
+    ],
+    toast: '', toastVisible: false
+  };
+
+  componentDidMount() {
+    const base = Date.now();
+    this.setState(s => ({
+      pending: s.pending.map(p => ({ ...p, endsAt: base + p.totalSec * 1000 }))
+    }));
+    this._tick = setInterval(() => this.setState({ now: Date.now() }), 1000);
+    this._resize = () => this.setState({ vw: window.innerWidth });
+    window.addEventListener('resize', this._resize);
+    this.setState({ vw: window.innerWidth });
+    this._load = setTimeout(() => this.setState({ txLoading: false }), 850);
+    // auto-commit checker
+    this._commit = setInterval(() => this._checkCommit(), 500);
+  }
+  componentWillUnmount() {
+    clearInterval(this._tick); clearInterval(this._commit);
+    clearTimeout(this._load); clearTimeout(this._toastT);
+    window.removeEventListener('resize', this._resize);
+  }
+
+  _checkCommit() {
+    const due = this.state.pending.filter(p => p.endsAt && p.endsAt - this.state.now <= 0);
+    if (!due.length) return;
+    this.setState(s => {
+      let tx = s.transactions;
+      due.forEach(p => {
+        tx = [{ id:'c'+p.id+Date.now(), day:29, time:this._clock(), category:p.category, note:p.message, type:p.type, amount:p.amount }, ...tx];
+      });
+      return { transactions: tx, pending: s.pending.filter(p => !(p.endsAt && p.endsAt - s.now <= 0)) };
+    });
+    this._showToast('Committed ' + this.fmt(due[0].amount) + ' · ' + due[0].category);
+  }
+  _clock() {
+    const d = new Date(); let h = d.getHours(); const m = String(d.getMinutes()).padStart(2,'0');
+    const ap = h >= 12 ? 'PM':'AM'; h = h % 12 || 12; return h+':'+m+' '+ap;
+  }
+  _showToast(t) {
+    clearTimeout(this._toastT);
+    this.setState({ toast: t, toastVisible: true });
+    this._toastT = setTimeout(() => this.setState({ toastVisible: false }), 2600);
+  }
+
+  // ---- formatting ----
+  fmt(n, signed) {
+    const neg = n < 0; let x = Math.abs(Math.round(n));
+    let s = String(x);
+    if (s.length > 3) {
+      const last3 = s.slice(-3); let rest = s.slice(0, -3);
+      rest = rest.replace(/\B(?=(\d{2})+(?!\d))/g, ',');
+      s = rest + ',' + last3;
+    }
+    const sign = neg ? '−' : (signed ? '+' : '');
+    return sign + '₹' + s;
+  }
+  pct(n) { return (n >= 0 ? '+' : '−') + Math.abs(n).toFixed(1) + '%'; }
+
+  nav(screen) { this.setState({ screen }); }
+
+  ic(name) {
+    const R = React, P = (t,a) => R.createElement(t,a);
+    const d = {
+      overview:[['rect',{x:3,y:3,width:8,height:9,rx:1.5}],['rect',{x:13,y:3,width:8,height:5,rx:1.5}],['rect',{x:13,y:12,width:8,height:9,rx:1.5}],['rect',{x:3,y:16,width:8,height:5,rx:1.5}]],
+      transactions:[['path',{d:'M4 4h16v16l-2.5-1.5L15 20l-2.5-1.5L10 20l-2.5-1.5L5 20l-1-1Z'}],['path',{d:'M8 9h8M8 13h5'}]],
+      spending:[['path',{d:'M21 12a9 9 0 1 1-9-9v9Z'}],['path',{d:'M21 12a9 9 0 0 0-9-9'}]],
+      portfolio:[['path',{d:'M3 17l5-5 4 4 7-8'}],['path',{d:'M20 7h-4M20 7v4'}]],
+      pending:[['circle',{cx:12,cy:12,r:9}],['path',{d:'M12 7v5l3 2'}]],
+      privacy:[['path',{d:'M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6Z'}],['path',{d:'m9 12 2 2 4-4'}]],
+      settings:[['circle',{cx:12,cy:12,r:3}],['path',{d:'M19.4 13.5a7.8 7.8 0 0 0 0-3l1.8-1.4-2-3.4-2.1.9a7.6 7.6 0 0 0-2.6-1.5L14 2h-4l-.5 2.6a7.6 7.6 0 0 0-2.6 1.5l-2.1-.9-2 3.4L4.6 10.5a7.8 7.8 0 0 0 0 3l-1.8 1.4 2 3.4 2.1-.9a7.6 7.6 0 0 0 2.6 1.5L10 22h4l.5-2.6a7.6 7.6 0 0 0 2.6-1.5l2.1.9 2-3.4Z'}]],
+      Dining:[['path',{d:'M6 3v8a2 2 0 0 0 4 0V3M8 11v10M18 3c-1.5 0-2 2-2 5s.5 4 2 4v9'}]],
+      Coffee:[['path',{d:'M4 8h13v5a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4Z'}],['path',{d:'M17 9h2a2 2 0 0 1 0 4h-2'}],['path',{d:'M7 3v2M11 3v2'}]],
+      Groceries:[['path',{d:'M4 5h2l2 11h9l2-7H7'}],['circle',{cx:9,cy:20,r:1}],['circle',{cx:17,cy:20,r:1}]],
+      Transport:[['path',{d:'M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11v6H5Z'}],['path',{d:'M5 17v2M19 17v2'}],['circle',{cx:8,cy:14,r:1}],['circle',{cx:16,cy:14,r:1}]],
+      Bills:[['path',{d:'M6 3h12v18l-3-2-3 2-3-2-3 2Z'}],['path',{d:'M9 8h6M9 12h6'}]],
+      Electronics:[['rect',{x:3,y:5,width:18,height:11,rx:1.5}],['path',{d:'M2 20h20'}]],
+      Investment:[['path',{d:'M4 17l5-5 4 4 7-8'}],['path',{d:'M20 8h-4M20 8v4'}]]
+    };
+    const arr = d[name] || d.Bills;
+    const html = arr.map(c => {
+      const attrs = Object.entries(c[1]).map(([k,v]) => k+'="'+v+'"').join(' ');
+      return '<'+c[0]+' '+attrs+'></'+c[0]+'>';
+    }).join('');
+    return { __html: html };
+  }
+
+  // ---- nav config ----
+  _navDefs() {
+    return [
+      { key:'overview', label:'Overview', icon:this.ic('overview') },
+      { key:'transactions', label:'Transactions', icon:this.ic('transactions') },
+      { key:'spending', label:'Spending', icon:this.ic('spending') },
+      { key:'portfolio', label:'Portfolio', icon:this.ic('portfolio') },
+      { key:'pending', label:'Pending', icon:this.ic('pending'), badge:true },
+      { key:'privacy', label:'Privacy & Trust', icon:this.ic('privacy') },
+      { key:'settings', label:'Settings', icon:this.ic('settings') }
+    ];
+  }
+
+  // ---- derived ----
+  _monthExpense() { return this.state.transactions.filter(t => t.type==='expense' && t.day>=16).reduce((a,t)=>a+t.amount,0); }
+  _monthInvest() { return this.state.transactions.filter(t => t.type==='investment' && t.day>=16).reduce((a,t)=>a+t.amount,0); }
+
+  _catTotals(filterFn) {
+    const m = {};
+    this.state.transactions.filter(filterFn).forEach(t => { m[t.category] = (m[t.category]||0) + t.amount; });
+    return Object.entries(m).map(([category,amount])=>({category,amount})).sort((a,b)=>b.amount-a.amount);
+  }
+
+  _palette() { return ['#2E5D45','#4F7C61','#7B9B6E','#B06A2C','#CC9A52','#9A9080','#C2B9A6']; }
+
+  _imonths() {
+    return [
+      { key:'jan', short:'Jan', label:'January 2026', spend:38200, exp:28, inv:40000, mf:40000, stock:0,
+        cats:[['Groceries',9200],['Food & Dining',7600],['Bills & Utilities',6400],['Shopping',5300],['Transport',4100],['Subscriptions',1600],['Other / Misc',4000]],
+        big:[['Winter jacket','Shopping',5300],['Monthly groceries','Groceries',4200],['Electricity + gas','Bills & Utilities',3800]] },
+      { key:'feb', short:'Feb', label:'February 2026', spend:44900, exp:30, inv:40000, mf:40000, stock:0,
+        cats:[['Food & Dining',11200],['Travel',9800],['Groceries',8600],['Bills & Utilities',5200],['Transport',4600],['Coffee & Snacks',2100],['Other / Misc',3400]],
+        big:[['Goa weekend trip','Travel',9800],['Anniversary dinner','Food & Dining',4200],['Monthly groceries','Groceries',3900]] },
+      { key:'mar', short:'Mar', label:'March 2026', spend:29600, exp:24, inv:65000, mf:40000, stock:25000,
+        cats:[['Groceries',7800],['Food & Dining',6400],['Bills & Utilities',5100],['Transport',3900],['Health & Medical',3200],['Coffee & Snacks',1300],['Other / Misc',1900]],
+        big:[['Dental treatment','Health & Medical',3200],['Monthly groceries','Groceries',3600],['Electricity','Bills & Utilities',2800]] },
+      { key:'apr', short:'Apr', label:'April 2026', spend:51300, exp:33, inv:40000, mf:40000, stock:0,
+        cats:[['Shopping',14200],['Food & Dining',9800],['Groceries',8900],['Bills & Utilities',5600],['Transport',4800],['Entertainment',3000],['Other / Misc',5000]],
+        big:[['New wardrobe','Shopping',9200],['Dinner — birthday','Food & Dining',5400],['Monthly groceries','Groceries',4100]] },
+      { key:'may', short:'May', label:'May 2026', spend:54200, exp:35, inv:55000, mf:40000, stock:15000,
+        cats:[['Groceries',9800],['Travel',8200],['Food & Dining',7400],['Bills & Utilities',6100],['Shopping',5300],['Health & Medical',4300],['Transport',4200],['Entertainment',2900],['Coffee & Snacks',1850],['Other / Misc',4150]],
+        big:[['Delhi flight','Travel',8200],['Monthly groceries','Groceries',4600],['New sneakers','Shopping',3400]] },
+      { key:'jun', short:'Jun', label:'June 2026', derived:true },
+      { key:'jul', short:'Jul', label:'July 2026', empty:true }
+    ];
+  }
+
+  _synthDaily(total) {
+    const days = 15, base = total/days, arr = []; let s = total % 9973 + 7;
+    for (let i=0;i<days;i++) { s = (s*9301+49297)%233280; const r = s/233280; arr.push(Math.round(base*(0.45+r*1.5))); }
+    return arr;
+  }
+
+  goCategory(cat) { this.setState({ screen:'transactions', search:cat, filterType:'all' }); }
+
+  renderVals() {
+    const st = this.state;
+    const isMobile = st.vw < 820;
+    const screens = ['overview','transactions','spending','portfolio','pending','privacy','settings'];
+
+    // nav (literal-icon buttons keyed by screen)
+    const navStyle = (key) => { const a = st.screen===key; return 'display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:9px;font-size:14px;font-weight:'+(a?'600':'500')+';text-align:left;width:100%;color:'+(a?'#214333':'#6B6358')+';background:'+(a?'#E5ECE2':'transparent')+';'; };
+    const mk = (key) => ({ onClick:()=>this.nav(key), style:navStyle(key), active:st.screen===key });
+    const nv = { overview:mk('overview'), transactions:mk('transactions'), spending:mk('spending'), insights:mk('insights'), portfolio:mk('portfolio'), pending:mk('pending'), privacy:mk('privacy'), settings:mk('settings') };
+    const tabStyle = (key) => { const a = st.screen===key; return 'display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 10px;flex:1;color:'+(a?'#2E5D45':'#9C9280')+';'; };
+    const tmk = (key) => ({ onClick:()=>this.nav(key), style:tabStyle(key) });
+    const tab = { overview:tmk('overview'), transactions:tmk('transactions'), portfolio:tmk('portfolio'), pending:tmk('pending'), settings:tmk('settings') };
+    const pendingBadge = st.pending.length>0;
+    const pendBadgeText = String(st.pending.length);
+
+    // titles
+    const titles = { overview:['Overview','Tuesday, 29 June'], transactions:['Transactions','Your ledger'], spending:['Spending','Where money goes'], insights:['Monthly Insights','One month, in depth'], portfolio:['Portfolio','Investments'], pending:['Pending','Grace window'], privacy:['Privacy & Trust','How your data flows'], settings:['Settings','Account & control'] };
+
+    // overview figures
+    const monthExp = this._monthExpense(), monthInv = this._monthInvest();
+    const lastMonth = 54200;
+    const deltaPct = ((monthExp - lastMonth) / lastMonth) * 100;
+    const flowTotal = monthExp + monthInv;
+    const pfInvested = st.holdings.reduce((a,h)=>a+h.invested,0);
+    const pfCurrent = st.holdings.reduce((a,h)=>a+h.current,0);
+    const pfPnl = pfCurrent - pfInvested;
+    const pfPnlPct = (pfPnl / pfInvested) * 100;
+
+    // where it went (expenses this month)
+    const expCats = this._catTotals(t => t.type==='expense' && t.day>=16);
+    const expTotal = expCats.reduce((a,c)=>a+c.amount,0);
+    const whereItWent = expCats.map((c,i) => ({
+      category:c.category, amountLabel:this.fmt(c.amount), pct:c.amount/expTotal*100,
+      pctLabel:(c.amount/expTotal*100).toFixed(0)+'%', barW:(c.amount/expCats[0].amount*100).toFixed(1)+'%',
+      barColor: i===0 ? '#B06A2C' : '#2E5D45', onClick:()=>this.goCategory(c.category)
+    }));
+
+    // chart: days 14..28
+    const cap = 4000;
+    const days = [];
+    for (let d=14; d<=28; d++) {
+      const v = st.transactions.filter(t=>t.day===d && t.type==='expense').reduce((a,t)=>a+t.amount,0);
+      const outlier = v > cap;
+      days.push({
+        label:String(d), value:v, tip:'Jun '+d+': '+this.fmt(v),
+        h: v===0 ? '3px' : Math.max(6, Math.min(v,cap)/cap*100)+'%',
+        color: outlier ? '#B06A2C' : (v>0?'#2E5D45':'#D8CFBE'),
+        outlier, outLabel: outlier ? '₹66k' : ''
+      });
+    }
+
+    // recent
+    const dateLabel = (d) => d + ' Jun';
+    const recent = st.transactions.slice(0,5).map(t => ({
+      note:t.note, category:t.category, dateLabel:dateLabel(t.day),
+      amountLabel:(t.type==='investment'?'+':'−')+this.fmt(t.amount).replace('₹','₹'),
+      amtColor: t.type==='investment' ? '#2E5D45' : '#3A362E',
+      isInvest: t.type==='investment', isExpense: t.type!=='investment',
+      iconBg: t.type==='investment' ? '#E5ECE2' : '#F0E7D6',
+      iconColor: t.type==='investment' ? '#2E5D45' : '#A87436'
+    }));
+
+    // transactions table
+    const typeTag = (type) => 'display:inline-flex;align-items:center;font-size:11px;letter-spacing:.05em;text-transform:uppercase;font-weight:600;color:'+(type==='investment'?'#2E5D45':'#857C6B')+';';
+    let filtered = st.transactions.filter(t => st.filterType==='all' ? true : t.type===st.filterType);
+    if (st.search.trim()) {
+      const q = st.search.trim().toLowerCase();
+      filtered = filtered.filter(t => (t.note+' '+t.category).toLowerCase().includes(q));
+    }
+    const gridCols = isMobile ? '' : 'display:grid;grid-template-columns:96px 150px 1fr 110px 130px 84px;gap:14px;align-items:center;padding:14px 22px;';
+    const txRows = filtered.map(t => {
+      const editing = st.editingTxId === t.id;
+      return {
+        id:t.id, time:t.time, dateLabel:dateLabel(t.day), category:t.category, note:t.note,
+        typeLabel: t.type==='investment'?'Investment':'Expense', typeTagStyle: typeTag(t.type),
+        amountLabel:(t.type==='investment'?'+':'')+this.fmt(t.amount),
+        amtColor: t.type==='investment' ? '#2E5D45' : '#1C1A16',
+        editing, viewing: !editing,
+        rowStyle:'border-bottom:1px solid #ECE4D5;',
+        gridStyle: isMobile
+          ? 'display:grid;grid-template-columns:1fr auto;gap:6px 14px;padding:14px 18px;align-items:center;'
+          : gridCols,
+        cellTime: isMobile ? 'grid-column:1;order:2;' : '',
+        catStyle: isMobile
+          ? 'grid-column:1;order:1;font-size:14px;font-weight:600;color:#2C2922;'
+          : 'font-size:13.5px;font-weight:600;color:#2C2922;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;',
+        noteStyle: isMobile ? 'grid-column:1;order:3;font-size:12.5px;color:#9C9280;' : 'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;',
+        typeTagStyleWrap:'',
+        amtCell: isMobile ? 'grid-column:2;order:1;align-self:start;font-size:15px;' : '',
+        actCell: isMobile ? 'grid-column:2;order:3;' : '',
+        onEdit: () => this.setState({ editingTxId:t.id, draft:{ category:t.category, note:t.note, amount:String(t.amount) } }),
+        onDelete: () => { this.setState(s=>({ transactions:s.transactions.filter(x=>x.id!==t.id), editingTxId: s.editingTxId===t.id?null:s.editingTxId })); this._showToast('Deleted · '+t.note); }
+      };
+    });
+    // hide type tag column label on mobile via style already in typeLabel cell — add hidden when mobile
+    txRows.forEach(r => { r.typeTagStyle = r.typeTagStyle + (isMobile ? 'display:none;' : ''); });
+
+    const txEmpty = !st.txLoading && filtered.length===0;
+    const txShowRows = !st.txLoading && filtered.length>0;
+    const txFilters = [
+      { key:'all', label:'All' }, { key:'expense', label:'Expenses' }, { key:'investment', label:'Investments' }
+    ].map(f => ({ label:f.label, onClick:()=>this.setState({filterType:f.key}),
+      style:'font-size:13px;font-weight:600;padding:7px 14px;border-radius:7px;color:'+(st.filterType===f.key?'#214333':'#857C6B')+';background:'+(st.filterType===f.key?'#F6F2EA':'transparent')+';'+(st.filterType===f.key?'box-shadow:0 1px 2px rgba(28,26,22,.08);':'') }));
+
+    // spending screen
+    const months = [
+      { label:'June 2026', fn:(t)=>t.type==='expense' && t.day>=16 },
+      { label:'May 2026', static:[
+        {category:'Groceries',amount:9800},{category:'Travel',amount:8200},{category:'Food & Dining',amount:7400},{category:'Bills & Utilities',amount:6100},{category:'Shopping',amount:5300},
+        {category:'Health & Medical',amount:4300},{category:'Transport',amount:4200},{category:'Entertainment',amount:2900},{category:'Coffee & Snacks',amount:1850},{category:'Other / Misc',amount:4150}
+      ] }
+    ];
+    const curMonth = months[st.spendIdx];
+    const spendCats = curMonth.static ? curMonth.static.slice().sort((a,b)=>b.amount-a.amount) : this._catTotals(curMonth.fn);
+    const spendTotalN = spendCats.reduce((a,c)=>a+c.amount,0);
+    const pal = this._palette();
+    const spendSegments = spendCats.map((c,i)=>({ w:(c.amount/spendTotalN*100).toFixed(2)+'%', color:pal[i%pal.length], tip:c.category+' '+this.fmt(c.amount) }));
+    const spendList = spendCats.map((c,i)=>({ category:c.category, amountLabel:this.fmt(c.amount), pctLabel:(c.amount/spendTotalN*100).toFixed(1)+'%', color:pal[i%pal.length], onClick:()=>this.goCategory(c.category) }));
+
+    // ===== monthly insights =====
+    const IM = this._imonths();
+    const iIdx = st.insightIdx;
+    const iSel = IM[iIdx];
+    const junExp = st.transactions.filter(t=>t.type==='expense');
+    const junInv = st.transactions.filter(t=>t.type==='investment');
+    const mSpend = (m)=> m.empty ? 0 : (m.derived ? junExp.reduce((a,t)=>a+t.amount,0) : m.spend);
+    const mInv = (m)=> m.empty ? 0 : (m.derived ? junInv.reduce((a,t)=>a+t.amount,0) : m.inv);
+
+    let iEmpty = !!iSel.empty, iHasData = !iEmpty;
+    let iSpend=0,iInv=0,iExp=0,iMf=0,iStock=0,iCats=[],iBig=[],iLast=null,iAvg=null,iDailyRaw=[];
+    if (iHasData) {
+      iSpend = mSpend(iSel); iInv = mInv(iSel);
+      if (iSel.derived) {
+        iCats = this._catTotals(t=>t.type==='expense').map(c=>[c.category,c.amount]);
+        iBig = junExp.slice().sort((a,b)=>b.amount-a.amount).slice(0,3).map(t=>[t.note,t.category,t.amount]);
+        iExp = junExp.length;
+        iMf = junInv.filter(t=>t.category==='Mutual Fund').reduce((a,t)=>a+t.amount,0);
+        iStock = junInv.filter(t=>t.category==='Stocks / Equity').reduce((a,t)=>a+t.amount,0);
+        const cap=4000; for (let d=16; d<=28; d++){ iDailyRaw.push(junExp.filter(t=>t.day===d).reduce((a,t)=>a+t.amount,0)); }
+      } else {
+        iCats = iSel.cats.slice().sort((a,b)=>b[1]-a[1]); iBig = iSel.big; iExp = iSel.exp; iMf = iSel.mf; iStock = iSel.stock;
+        iDailyRaw = this._synthDaily(iSel.spend);
+      }
+      const prior = IM.slice(Math.max(0,iIdx-5), iIdx).filter(m=>!m.empty);
+      iLast = (iIdx>0 && !IM[iIdx-1].empty) ? mSpend(IM[iIdx-1]) : null;
+      iAvg = prior.length ? Math.round(prior.reduce((a,m)=>a+mSpend(m),0)/prior.length) : null;
+    }
+    // spending deltas
+    const iDeltaAbs = iLast!=null ? iSpend - iLast : null;
+    const iDeltaPct = iLast ? (iDeltaAbs/iLast*100) : null;
+    const iAvgPct = iAvg ? ((iSpend-iAvg)/iAvg*100) : null;
+    // daily bars
+    const dCap = iSel.derived ? 4000 : Math.max(1, ...(iDailyRaw.length?iDailyRaw:[1]));
+    const iDailyBars = iDailyRaw.map((v,idx)=>{ const over=v>dCap; return { label:String(iSel.derived?16+idx:idx+1), h: v===0?'3px':Math.max(7,Math.min(v,dCap)/dCap*100)+'%', color: over?'#B06A2C':'#C08743', out:over, outLabel: over?('\u20b9'+Math.round(v/1000)+'k'):'', tip:this.fmt(v) }; });
+    // category list
+    const iCatTop = iCats[0] ? iCats[0][1] : 1;
+    const iCatList = iCats.map((c,idx)=>({ category:c[0], amountLabel:this.fmt(c[1]), pctLabel:(c[1]/(iSpend||1)*100).toFixed(0)+'%', barW:(c[1]/iCatTop*100).toFixed(1)+'%', barColor: idx===0?'#B06A2C':'#C7A06A', onClick:()=>this.goCategory(c[0]) }));
+    // biggest
+    const iBigList = iBig.map(b=>({ note:b[0], category:b[1], amountLabel:this.fmt(b[2]) }));
+    // investing split
+    const iInvTotal = iMf + iStock || iInv;
+    const iMfPct = iInvTotal ? (iMf/iInvTotal*100) : 0;
+    const iStockPct = iInvTotal ? (iStock/iInvTotal*100) : 0;
+    // 6-month trailing
+    const tStart = Math.max(0, iIdx-5);
+    const trail = IM.slice(tStart, iIdx+1);
+    const sMax = Math.max(1, ...trail.map(m=>mSpend(m)));
+    const vMax = Math.max(1, ...trail.map(m=>mInv(m)));
+    const iSpendSeries = trail.map(m=>({ label:m.short, h:(mSpend(m)/sMax*100).toFixed(1)+'%', cur:m.key===iSel.key, vLabel:this.fmt(mSpend(m)) }));
+    const iInvestSeries = trail.map(m=>({ label:m.short, h:(mInv(m)/vMax*100).toFixed(1)+'%', cur:m.key===iSel.key, vLabel:this.fmt(mInv(m)) }));
+    const seriesBar = (s, accent) => ({ ...s, barColor: s.cur ? accent : '#E0D6C5', labelColor: s.cur ? '#3A362E' : '#A89E8B' });
+    const iSpendBars = iSpendSeries.map(s=>seriesBar(s,'#B06A2C'));
+    const iInvestBars = iInvestSeries.map(s=>seriesBar(s,'#2E5D45'));
+    // digest + cashflow
+    const iTopCat = iCats[0] ? iCats[0][0] : '';
+    const iDigest = iHasData ? ('You spent '+this.fmt(iSpend)+' across '+iExp+' entries — '+iTopCat+' was your top category; you invested '+this.fmt(iInv)+'.') : '';
+    const iOut = iSpend + iInv;
+    const iSpendShare = iOut ? (iSpend/iOut*100) : 0;
+    const iInvShare = iOut ? (iInv/iOut*100) : 0;
+
+    // portfolio rows
+    const holdings = st.holdings.map(h => {
+      const pnl = h.current - h.invested; const up = pnl>=0;
+      return {
+        name:h.name, ticker:h.ticker, type:h.type,
+        typeTagStyle:'display:inline-flex;font-size:11px;letter-spacing:.04em;text-transform:uppercase;font-weight:600;color:'+(h.type==='Stock'?'#B06A2C':'#2E5D45')+';',
+        investedLabel:this.fmt(h.invested), currentLabel:this.fmt(h.current),
+        pnlLabel:(up?'+':'−')+'₹'+this.fmt(Math.abs(pnl)).replace('₹',''),
+        pnlPctLabel:this.pct(pnl/h.invested*100), pnlColor: up?'#2F7A4F':'#B23B36',
+        gridStyle: isMobile
+          ? 'display:grid;grid-template-columns:1fr auto;gap:5px 12px;padding:16px 18px;border-bottom:1px solid #ECE4D5;align-items:start;'
+          : 'display:grid;grid-template-columns:2fr 1fr 1.2fr 1.2fr 1.3fr;gap:14px;padding:15px 24px;border-bottom:1px solid #ECE4D5;align-items:center;',
+        typeCell: isMobile ? 'grid-column:1;' : '',
+        lblInvested: isMobile ? 'display:none;' : '',
+        lblCurrent: isMobile ? 'grid-row:1;grid-column:2;font-size:15px;' : '',
+        lblPnl: isMobile ? 'grid-column:2;' : ''
+      };
+    });
+
+    // pending cards
+    const pendingCards = st.pending.map(p => {
+      const left = Math.max(0, Math.ceil((p.endsAt - st.now)/1000));
+      const mm = Math.floor(left/60); const ss = String(left%60).padStart(2,'0');
+      return {
+        id:p.id, amountLabel:this.fmt(p.amount), category:p.category, message:p.message,
+        typeLabel: p.type==='investment'?'Investment':'Expense',
+        typeTagStyle:'display:inline-flex;font-size:11px;letter-spacing:.05em;text-transform:uppercase;font-weight:600;color:'+(p.type==='investment'?'#2E5D45':'#857C6B')+';',
+        mmss: mm+':'+ss, barW:(left/p.totalSec*100).toFixed(1)+'%',
+        editing:p.editing, viewing:!p.editing, draftCategory:p.draftCategory, draftAmount:p.draftAmount,
+        onEdit:()=>this.setState(s=>({pending:s.pending.map(x=>x.id===p.id?{...x,editing:true,draftCategory:x.category,draftAmount:String(x.amount)}:x)})),
+        onDraftCategory:(e)=>{const v=e.target.value;this.setState(s=>({pending:s.pending.map(x=>x.id===p.id?{...x,draftCategory:v}:x)}));},
+        onDraftAmount:(e)=>{const v=e.target.value.replace(/[^0-9]/g,'');this.setState(s=>({pending:s.pending.map(x=>x.id===p.id?{...x,draftAmount:v}:x)}));},
+        onSave:()=>{this.setState(s=>({pending:s.pending.map(x=>x.id===p.id?{...x,editing:false,category:x.draftCategory,amount:parseInt(x.draftAmount||'0',10)}:x)}));this._showToast('Updated · '+p.draftCategory);},
+        onCancel:()=>{this.setState(s=>({pending:s.pending.filter(x=>x.id!==p.id)}));this._showToast('Cancelled · '+p.message);}
+      };
+    });
+
+    // privacy
+    const privacySteps = [
+      { num:'01', title:'What reaches the AI — almost nothing', body:'Most messages are matched by keywords on our servers and never touch any AI. Only the description text is sent — and only when matching is unsure. “Dining 400” is parsed locally; it never leaves.', tag:'description text only · when unsure' },
+      { num:'02', title:'What is stored — encrypted, isolated', body:'Amounts are encrypted per user and stored in isolation. No other user, and no admin, can read your figures. Decryption happens only for you, in your session.', tag:'per-user encryption · zero admin access' },
+      { num:'03', title:'What never leaves us — the amount', body:'Before any AI call, the amount is masked out and replaced with a placeholder. The model only ever sees “Dining ___”. We re-attach the real figure on our own servers afterward.', tag:'amount masked → re-attached server-side' }
+    ];
+
+    const expCatList = st.expenseCategories || [];
+    const invCatList = st.investmentCategories || [];
+    const expenseChips = expCatList.map(c => ({ name:c, onRemove:()=>this.setState(s=>({expenseCategories:s.expenseCategories.filter(x=>x!==c)})) }));
+    const investChips = invCatList.map(c => ({ name:c, onRemove:()=>this.setState(s=>({investmentCategories:s.investmentCategories.filter(x=>x!==c)})) }));
+    const allCategories = [...expCatList, ...invCatList];
+
+    return {
+      rootDir: isMobile ? 'flex-direction:column;padding-bottom:64px;' : '',
+      showSidebar: !isMobile, isMobile,
+      mainPad: '', topbarPad: isMobile ? '14px 16px' : '18px 32px',
+      titleSize: isMobile ? '21px' : '26px',
+      contentMax: isMobile ? '100%' : '1080px',
+      contentPad: isMobile ? '20px 16px 40px' : '30px 32px 56px',
+      searchW: isMobile ? '0;display:none' : '230px',
+      nv, tab, pendingBadge, pendBadgeText,
+      screen: st.screen,
+      isOverview: st.screen==='overview', isTx: st.screen==='transactions', isSpending: st.screen==='spending', isInsights: st.screen==='insights',
+      isPortfolio: st.screen==='portfolio', isPending: st.screen==='pending', isPrivacy: st.screen==='privacy', isSettings: st.screen==='settings',
+      pageTitle: titles[st.screen][0], pageSub: isMobile ? '' : titles[st.screen][1],
+      search: st.search, onSearch:(e)=>this.setState({search:e.target.value, screen:'transactions'}),
+      goSettings:()=>this.nav('settings'), goPortfolio:()=>this.nav('portfolio'), goPending:()=>this.nav('pending'),
+
+      // overview
+      ovTopCols: isMobile ? '1fr' : '1.2fr 1fr',
+      ovMidCols: isMobile ? '1fr' : '1.3fr 1fr',
+      ovBotCols: isMobile ? '1fr' : '1fr 1.15fr',
+      monthExpense:this.fmt(monthExp), monthInvest:this.fmt(monthInv),
+      flowExpenseW:(monthExp/flowTotal*100).toFixed(1)+'%', flowInvestW:(monthInv/flowTotal*100).toFixed(1)+'%',
+      investShare:(monthInv/flowTotal*100).toFixed(0)+'%', netOut:this.fmt(monthExp+monthInv),
+      lastMonthExpense:this.fmt(lastMonth), expenseDeltaPct:this.pct(deltaPct).replace('+','+').replace('−','−'),
+      deltaColor: deltaPct>=0 ? '#E0A24A' : '#7BC894', deltaArrow: deltaPct>=0 ? '▲' : '▼',
+      barGap: isMobile ? '4px' : '7px',
+      chartDays:days, whereItWent, recent, pendingCount:String(st.pending.length),
+      portfolioValue:this.fmt(pfCurrent), portfolioInvested:this.fmt(pfInvested),
+      portfolioPnl:this.fmt(pfPnl, true), portfolioPnlPct:this.pct(pfPnlPct),
+
+      // transactions
+      txFilters, txSearchActive: !!st.search.trim(), clearSearch:()=>this.setState({search:''}),
+      onExportCsv:()=>this._exportCsv(),
+      txLoading: st.txLoading, txEmpty, txShowRows, txRows,
+      skeletons:[1,2,3,4,5,6],
+      categories: allCategories,
+      draftCategory: st.draft.category, draftNote: st.draft.note, draftAmount: st.draft.amount,
+      onDraftCategory:(e)=>this.setState(s=>({draft:{...s.draft,category:e.target.value}})),
+      onDraftNote:(e)=>this.setState(s=>({draft:{...s.draft,note:e.target.value}})),
+      onDraftAmount:(e)=>this.setState(s=>({draft:{...s.draft,amount:e.target.value.replace(/[^0-9]/g,'')}})),
+      onSaveEdit:()=>{const id=st.editingTxId;const d=st.draft;this.setState(s=>({transactions:s.transactions.map(x=>x.id===id?{...x,category:d.category,note:d.note,amount:parseInt(d.amount||'0',10)}:x),editingTxId:null}));this._showToast('Saved');},
+      onCancelEdit:()=>this.setState({editingTxId:null}),
+      resetFilters:()=>this.setState({filterType:'all',search:''}),
+      txCountLabel: txShowRows ? (filtered.length+' of '+st.transactions.length+' entries') : '',
+
+      // spending
+      spendMonthLabel: curMonth.label, spendTotal:this.fmt(spendTotalN),
+      spendSegments, spendList,
+      spendPrev:()=>this.setState(s=>({spendIdx:Math.min(1,s.spendIdx+1)})),
+      spendNext:()=>this.setState(s=>({spendIdx:Math.max(0,s.spendIdx-1)})),
+      spendNextStyle:'width:34px;height:34px;border-radius:8px;border:1px solid #D8CFBE;display:flex;align-items:center;justify-content:center;background:#F6F2EA;color:'+(st.spendIdx===0?'#CFC6B4':'#6B6358')+';'+(st.spendIdx===0?'pointer-events:none;':''),
+
+      // insights
+      iLabel: iSel.label, iEmpty, iHasData, iStoryCols: isMobile ? '1fr' : '1fr 1fr', iMomCols: isMobile ? '1fr' : '1fr 1fr',
+      iDigest, iSpendLabel:this.fmt(iSpend), iInvLabel:this.fmt(iInv), iExpCount:String(iExp),
+      iDeltaShown: iLast!=null, iDeltaLabel: iDeltaAbs!=null ? (iDeltaAbs>=0?'+':'\u2212')+this.fmt(Math.abs(iDeltaAbs)).replace('\u20b9','\u20b9') : '',
+      iDeltaPctLabel: iDeltaPct!=null ? this.pct(iDeltaPct) : '', iDeltaColor: (iDeltaPct||0)>=0 ? '#B06A2C' : '#2F7A4F', iDeltaArrow: (iDeltaPct||0)>=0 ? '\u25b2' : '\u25bc',
+      iAvgShown: iAvg!=null, iAvgLabel: iAvg!=null ? this.fmt(iAvg) : '', iAvgPctLabel: iAvgPct!=null ? this.pct(iAvgPct) : '',
+      iDailyBars, iCatList, iBigList,
+      iInvMfLabel:this.fmt(iMf), iInvStockLabel:this.fmt(iStock),
+      iMfW:iMfPct.toFixed(1)+'%', iStockW:iStockPct.toFixed(1)+'%',
+      iMfPctLabel:iMfPct.toFixed(0)+'%', iStockPctLabel:iStockPct.toFixed(0)+'%',
+      iHasStock: iStock>0,
+      iOutLabel:this.fmt(iOut), iSpendShareW:iSpendShare.toFixed(1)+'%', iInvShareW:iInvShare.toFixed(1)+'%',
+      iSpendBars, iInvestBars,
+      insightPrev:()=>this.setState(s=>({insightIdx:Math.max(0,s.insightIdx-1)})),
+      insightNext:()=>this.setState(s=>({insightIdx:Math.min(IM.length-1,s.insightIdx+1)})),
+      insightPrevStyle:'width:34px;height:34px;border-radius:8px;border:1px solid #D8CFBE;display:flex;align-items:center;justify-content:center;background:#F6F2EA;color:'+(iIdx===0?'#CFC6B4':'#6B6358')+';'+(iIdx===0?'pointer-events:none;':''),
+      insightNextStyle:'width:34px;height:34px;border-radius:8px;border:1px solid #D8CFBE;display:flex;align-items:center;justify-content:center;background:#F6F2EA;color:'+(iIdx===IM.length-1?'#CFC6B4':'#6B6358')+';'+(iIdx===IM.length-1?'pointer-events:none;':''),
+
+      // portfolio
+      pfTopCols: isMobile ? '1fr' : '1fr 1fr 1.1fr',
+      holdings,
+
+      // pending
+      pendCols: isMobile ? '1fr' : 'repeat(2,1fr)',
+      pendingCards, pendingEmpty: st.pending.length===0,
+
+      // privacy
+      privacySteps,
+
+      // settings
+      expenseChips, investChips,
+      expCatCount:String(expCatList.length), invCatCount:String(invCatList.length),
+      totalCatCount:String(allCategories.length),
+      newCat: st.newCat, onNewCat:(e)=>this.setState({newCat:e.target.value}),
+      onAddCat:()=>{const c=st.newCat.trim();if(!c)return;this.setState(s=>({expenseCategories:s.expenseCategories.includes(c)?s.expenseCategories:[...s.expenseCategories,c],newCat:''}));},
+
+      // toast
+      toast: st.toast, toastVisible: st.toastVisible, toastBottom: isMobile ? '84px' : '28px'
+    };
+  }
+
+  _exportCsv() {
+    const rows = [['Date','Time','Category','Note','Type','Amount (INR)']];
+    this.state.transactions.forEach(t => rows.push([t.day+' Jun 2026', t.time, t.category, '"'+t.note.replace(/"/g,'""')+'"', t.type, t.amount]));
+    const csv = rows.map(r=>r.join(',')).join('\n');
+    try {
+      const blob = new Blob([csv], { type:'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'moneyplant-transactions.csv';
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url), 1000);
+    } catch(e) {}
+    this._showToast('Exported '+this.state.transactions.length+' rows · CSV');
+  }
+}
+</script>
+</body>
+</html>

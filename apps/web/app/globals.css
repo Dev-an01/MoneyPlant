@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #efe9dd;
+  color: #1c1a16;
+  font-family: var(--font-franklin), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #2e5d45;
+  color: #f6f2ea;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  color: inherit;
+}
+
+*:focus-visible {
+  outline: 2px solid #2e5d45;
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #d8cfbe;
+  border-radius: 10px;
+  border: 3px solid #efe9dd;
+}
+
+/* skeleton shimmer */
+.mp-skel {
+  background: linear-gradient(90deg, #e5ddcf 25%, #efe9dd 50%, #e5ddcf 75%);
+  background-size: 720px 100%;
+  animation: mp-shimmer 1.4s infinite linear;
+  border-radius: 5px;
+}
+
+@keyframes mp-shimmer {
+  0% {
+    background-position: -360px 0;
+  }
+  100% {
+    background-position: 360px 0;
+  }
+}
+@keyframes mp-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes mp-toast {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* tabular figures helper */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+@layer components {
+  .mp-card {
+    @apply bg-card border border-line rounded-[14px];
+  }
+  .mp-eyebrow {
+    @apply text-[12px] tracking-[0.07em] uppercase text-muted font-semibold;
+  }
+  .mp-num {
+    @apply font-mono tnum;
+  }
+  .mp-serif {
+    @apply font-serif tnum;
+  }
+}

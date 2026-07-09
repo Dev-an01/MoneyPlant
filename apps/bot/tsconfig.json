@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "paths": {
+      "@moneyplant/shared": ["../../packages/shared/src/index.ts"],
+      "@moneyplant/core": ["../../packages/core/src/index.ts"],
+      "@moneyplant/db": ["../../packages/db/src/index.ts"]
+    }
+  },
+  "include": ["src"]
+}

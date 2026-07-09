@@ -1,0 +1,30 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "moneyplant",
+    "grammy",
+    "grammY",
+    "drizzle",
+    "Neon",
+    "Supabase",
+    "PGlite",
+    "AMFI",
+    "NAVs",
+    "paise",
+    "homomorphic",
+    "ciphertext",
+    "CKKS",
+    "OpenFHE",
+    "Concrete",
+    "rollups",
+    "Fraunces",
+    "Turborepo",
+    "nextauth",
+    "bcryptjs",
+    "pgdata",
+    "initdb",
+    "scram"
+  ],
+  "ignorePaths": ["node_modules/**", ".next/**", "dist/**", "bun.lock", "*.dc.html"]
+}
